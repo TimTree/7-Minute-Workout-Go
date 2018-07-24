@@ -1,0 +1,93 @@
+html {
+  padding:0;
+  margin:0;
+  height:100%;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 50px 50px;
+}
+
+body {
+  padding:0;
+  margin:0;
+  height:100%;
+  color:#fff;
+  background-color:#ff6912;
+  font-family:"noto sans", sans-serif;
+  display:grid;
+  grid-template-columns:100%;
+     grid-template-rows: 100px 1fr;
+  grid-template-areas: "sidebar"
+                       "content";
+}
+
+.header {
+  font-family:montserrat;
+  font-weight:800;
+  font-size:100px;
+  color:#ffb55a;
+  text-shadow:2px 2px 5px rgba(20,20,20,0.4);
+}
+
+.go {
+  height: 280px;
+  width: 280px;
+  border-radius: 50%;
+  border: 1px solid red;
+  font-size:115px;
+  font-family:montserrat;
+  font-weight:700;
+}
+
+.main {
+  grid-area: content;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.theBar {
+  grid-area: sidebar;
+  background-color:green;
+  opacity:0.4;
+
+}
+
+.intro {
+  text-align:left;
+  font-size:30px;
+  margin-top:0;
+}
+
+.selection {
+  display:grid;
+  grid-template-columns:300px 1fr 300px;
+     grid-template-rows: 100%;
+  grid-template-areas: "starsAndStreak  goButton  prefsAndCredits";
+}
+
+.starsAndStreak {
+  grid-area: starsAndStreak;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:right;
+  font-size:30px;
+}
+
+.goButton {
+  grid-area: goButton;
+}
+
+.prefsAndCredits {
+  grid-area: prefsAndCredits;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:left;
+  font-size:30px;
+}

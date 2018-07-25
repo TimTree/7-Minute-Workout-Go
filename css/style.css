@@ -16,10 +16,11 @@ body {
   height:100%;
   color:#fff;
   background-color:#ff6912;
+  background:linear-gradient(to bottom right, #f75e15, #fd9f2b);
   font-family:"noto sans", sans-serif;
   display:grid;
   grid-template-columns:100%;
-     grid-template-rows: 100px 1fr;
+     grid-template-rows: 80px 1fr;
   grid-template-areas: "sidebar"
                        "content";
 }
@@ -28,7 +29,7 @@ body {
   font-family:montserrat;
   font-weight:800;
   font-size:100px;
-  color:#ffb55a;
+  color:#fdce95;
   text-shadow:2px 2px 5px rgba(20,20,20,0.4);
 }
 
@@ -52,14 +53,13 @@ body {
 
 .theBar {
   grid-area: sidebar;
-  background-color:green;
-  opacity:0.4;
-
+  background-color:rgba(255,255,255,0);
+  color:white;
 }
 
 .intro {
   text-align:left;
-  font-size:30px;
+  font-size:24px;
   margin-top:0;
 }
 
@@ -90,4 +90,99 @@ body {
   align-items:center;
   text-align:left;
   font-size:30px;
+}
+
+#gauge {
+background-color:rgba(220,220,220,0.6);
+  margin:0 auto;
+
+  height:32px;
+}
+
+#active-gauge {
+  background-color:#92e6ff;
+  height:32px;
+  width:20%;
+
+  transition: width 0.2s ease-out;
+}
+
+#elapsedTime {
+  --widthA: auto;
+  display:inline;
+  font-size:45px;
+  position:absolute;
+  left:20%;
+  transform: translateX(-50%);
+  overflow:inherit;
+  background-color:rgba(255,255,255,0.4);
+  border-radius:8px;
+  padding: 0 8px;
+  margin-top:3px;
+}
+
+.titleArea{
+display:none;
+}
+
+.workoutArea {
+
+  display:grid;
+  /*display:none;*/
+  height:100%;
+    grid-template-columns:100%;
+    max-height:800px;
+     grid-template-rows: 90px 1fr 105px;
+  grid-template-areas: "nameOfWorkout"
+                        "workoutImg"
+                        "secondsLeft";
+}
+
+.nameOfWorkout {
+  font-size:65px;
+  font-weight:700;
+  grid-area: nameOfWorkout;
+}
+
+.workoutImg {
+  grid-area: workoutImg;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.secondsLeft {
+  grid-area: secondsLeft;
+  font-size:55px;
+}
+
+.upNext {
+  position:absolute;
+  right:0;
+  bottom:0;
+  background-color:rgba(0,0,0,0.2);
+  border-radius:40px 0 0 0;
+  height:160px;
+  width:280px;
+  z-index:-1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:35px;
+}
+
+#upNextWorkout {
+  font-size:18px;
+  margin-top:0.5em;
+  margin-bottom:0.3em;
+}
+
+#nextWorkout {
+  margin-top:0.5em;
+  margin-bottom:0.3em;
+}
+
+#footage {
+  max-height:90%;
+  max-width:75%;
 }

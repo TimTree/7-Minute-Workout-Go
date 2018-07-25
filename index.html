@@ -8,9 +8,35 @@
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
-    <div class="theBar"></div>
+    <div class="theBar">
+      <div id="gauge">
+    <div id="active-gauge"></div>
+    <div id="elapsedTime">1:30</div>
+  </div>
+    </div>
     <div class="main">
-      <div>
+
+    <div class="workoutArea">
+      <div class="nameOfWorkout">
+        Jumping Jacks
+      </div>
+      <div class="workoutImg">
+        <img id="footage" src="./img/JumpingJack1.png">
+      </div>
+      <div class="secondsLeft">
+        30 seconds left
+      </div>
+      <div class="upNext">
+        <div>
+        <p id="upNextWorkout">Up next:</p>
+        <p id="nextWorkout">Wall Sit</p>
+      </div>
+      </div>
+    </div>
+
+
+
+      <div class="titleArea">
         <p class="intro" id="intro-greeting">Hey <b>there!</b></p>
         <p class="intro" id="intro-goGetter">I know you're ready for a...</p>
       <div class="header">
@@ -34,6 +60,11 @@
     </div>
     </div>
     </div>
+
+
+
+
+
     </div>
 
     <script src="js/main.js" charset="utf-8"></script>

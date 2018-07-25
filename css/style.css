@@ -16,13 +16,27 @@ body {
   height:100%;
   color:#fff;
   background-color:#ff6912;
-  background:linear-gradient(to bottom right, #f75e15, #fd9f2b);
+  background: linear-gradient(-45deg, #c44b09, #eaa927);
+  background-size: 400% 400%;
+  animation: Gradient 30s ease infinite;
   font-family:"noto sans", sans-serif;
   display:grid;
   grid-template-columns:100%;
-     grid-template-rows: 80px 1fr;
-  grid-template-areas: "sidebar"
+  grid-template-rows: 1fr;
+  grid-template-areas:
                        "content";
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
 }
 
 .header {
@@ -33,7 +47,7 @@ body {
   text-shadow:2px 2px 5px rgba(20,20,20,0.4);
 }
 
-.go {
+#go {
   height: 280px;
   width: 280px;
   border-radius: 50%;
@@ -51,10 +65,11 @@ body {
   text-align:center;
 }
 
-.theBar {
+#theBar {
   grid-area: sidebar;
   background-color:rgba(255,255,255,0);
   color:white;
+  display:none;
 }
 
 .intro {
@@ -76,7 +91,7 @@ body {
   justify-content:center;
   align-items:center;
   text-align:right;
-  font-size:30px;
+  font-size:36px;
 }
 
 .goButton {
@@ -89,11 +104,11 @@ body {
   justify-content:center;
   align-items:center;
   text-align:left;
-  font-size:30px;
+  font-size:36px;
 }
 
 #gauge {
-background-color:rgba(220,220,220,0.6);
+background-color:rgba(230,230,230,0.6);
   margin:0 auto;
 
   height:32px;
@@ -102,37 +117,60 @@ background-color:rgba(220,220,220,0.6);
 #active-gauge {
   background-color:#92e6ff;
   height:32px;
-  width:20%;
+  width:0%;
+  animation: gaugeColor 7s ease 0s, gaugeMove 420s linear 0s;
+  animation-iteration-count:infinite;
+  animation-play-state: paused;
 
-  transition: width 0.2s ease-out;
 }
 
+@keyframes gaugeColor {
+    0%{background-color:#b5ecfd;} 50%{background-color:#55d1f5;} 100%{background-color:#b5ecfd;}
+}
+
+@keyframes gaugeMove {
+    from {width: 0%;}
+    to {width: 100%}
+}
+
+
 #elapsedTime {
-  --widthA: auto;
   display:inline;
   font-size:45px;
   position:absolute;
-  left:20%;
+  left:5%;
   transform: translateX(-50%);
   overflow:inherit;
-  background-color:rgba(255,255,255,0.4);
+  background-color:rgba(255,255,255,0.5);
   border-radius:8px;
   padding: 0 8px;
-  margin-top:3px;
+  margin-top:5px;
+  line-height:1.2;
+  animation: elapsedTimeMove 420s linear 0s;
+  animation-iteration-count:infinite;
+  animation-play-state: paused;
 }
 
-.titleArea{
-display:none;
+
+@keyframes elapsedTimeMove {
+    from {left: 5%;}
+    to {left: 95%}
 }
 
-.workoutArea {
+#titleArea{
+display:block;
+opacity:0;
+transition: opacity 0.25s ease-in-out;
+}
 
-  display:grid;
-  /*display:none;*/
+#workoutArea {
+  display:none;
   height:100%;
-    grid-template-columns:100%;
-    max-height:800px;
-     grid-template-rows: 90px 1fr 105px;
+  grid-template-columns:100%;
+  max-height:800px;
+  opacity:0;
+  transition: opacity 0.25s ease-in-out;
+  grid-template-rows: 90px 1fr 105px;
   grid-template-areas: "nameOfWorkout"
                         "workoutImg"
                         "secondsLeft";
@@ -185,4 +223,30 @@ display:none;
 #footage {
   max-height:90%;
   max-width:75%;
+}
+
+#creditsArea {
+  display:none;
+  background-color:rgba(255,255,255,0.4);
+  border-radius:20px;
+  padding:0 20px;
+  opacity:0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+#countdown {
+  display:none;
+  opacity:0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+#numberCountdown {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:120px;
+  background-color:rgba(255,255,255,0.4);
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
 }

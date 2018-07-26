@@ -16,7 +16,7 @@ body {
   height:100%;
   color:#fff;
   background-color:#ff6912;
-  background: linear-gradient(-45deg, #c44b09, #eaa927);
+  background: linear-gradient(-45deg,  #c44b09, #eaa927);
   background-size: 400% 400%;
   animation: Gradient 30s ease infinite;
   font-family:"noto sans", sans-serif;
@@ -70,6 +70,8 @@ body {
   background-color:rgba(255,255,255,0);
   color:white;
   display:none;
+  opacity:0;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .intro {
@@ -118,7 +120,7 @@ background-color:rgba(230,230,230,0.6);
   background-color:#92e6ff;
   height:32px;
   width:0%;
-  animation: gaugeColor 7s ease 0s, gaugeMove 420s linear 0s;
+  animation: gaugeColor 7s ease 0s, gaugeMove 160s linear 0s;
   animation-iteration-count:infinite;
   animation-play-state: paused;
 
@@ -146,7 +148,7 @@ background-color:rgba(230,230,230,0.6);
   padding: 0 8px;
   margin-top:5px;
   line-height:1.2;
-  animation: elapsedTimeMove 420s linear 0s;
+  animation: elapsedTimeMove 160s linear 0s;
   animation-iteration-count:infinite;
   animation-play-state: paused;
 }
@@ -170,8 +172,6 @@ transition: opacity 0.25s ease-in-out;
   max-height:800px;
   width:90%;
   max-width:1000px;
-  opacity:0;
-  transition: opacity 0.25s ease-in-out;
   grid-template-rows: 90px 1fr 105px;
   grid-template-areas: "nameOfWorkout"
                         "workoutImg"

@@ -1,6 +1,8 @@
 let timerSeconds = 0;
 let timerMinutes = 0;
 let intime;
+let imgNum = 1;
+let workoutNumbers = [];
 
 document.getElementById("go").addEventListener("click", function(){
   go();
@@ -26,6 +28,7 @@ function creditsToTitle() {
 }
 
 function go() {
+  createWorkout();
   document.getElementById("titleArea").style.opacity = "0";
   document.getElementById("titleArea").style.display = "none";
   document.getElementById("countdown").style.display = "flex";
@@ -44,7 +47,8 @@ function countdownToWorkout() {
   document.getElementById("theBar").style.display = "block";
   document.getElementById("active-gauge").style.animationPlayState="running";
   document.getElementById("elapsedTime").style.animationPlayState="running";
-  setTimeout(() => {document.getElementById("workoutArea").style.opacity = "1";},50);
+  setTimeout(() => {document.getElementById("theBar").style.opacity = "1";},50);
+  workoutInterval();
 }
 
 function startTimer() {
@@ -70,7 +74,7 @@ function add() {
         timerSeconds = 0;
         timerMinutes++;
     }
-    document.getElementById("elapsedTime").innerHTML=timerMinutes + ":"+(timerSeconds > 9 ? timerSeconds : "0" + timerSeconds);
+    document.getElementById("elapsedTime").innerHTML=timerMinutes + ":" + (timerSeconds > 9 ? timerSeconds : "0" + timerSeconds);
     }
 
     function stopwatch2() {
@@ -81,3 +85,82 @@ function add() {
     }
 
 setTimeout(() => {document.getElementById("titleArea").style.opacity = "1";},100);
+
+function createWorkout() {
+
+  let cardioNumbers = [];
+  let upperLowerBodyNumbers = [];
+  let coreNumbers = [];
+  let workoutSchemaSort = workoutSchema; // clone workoutSchema
+
+  while (workoutSchemaSort[0] != 0) {
+    shuffleArray(workoutSchemaSort);
+  }
+
+  for (let i = 0; i<workoutSchemaSort.length; i +=1 ) {
+    workoutNumbers.push([workoutSchemaSort[i],0]);
+  }
+
+  shuffleArray(workoutSchemaSort);
+
+  for (let i = 0; i<workoutSchemaSort.length; i +=1 ) {
+    workoutNumbers.push([workoutSchemaSort[i],0]);
+  }
+
+  while (cardioNumbers.length < 2) {
+      let randomNumber = Math.floor(Math.random()*allWorkouts[0].length);
+      if (cardioNumbers.indexOf(randomNumber) > -1) continue;
+      cardioNumbers[cardioNumbers.length] = randomNumber;
+    }
+    while (upperLowerBodyNumbers.length < 2) {
+      let randomNumber = Math.floor(Math.random()*allWorkouts[1].length);
+      if (upperLowerBodyNumbers.indexOf(randomNumber) > -1) continue;
+      upperLowerBodyNumbers[upperLowerBodyNumbers.length] = randomNumber;
+    }
+    while (coreNumbers.length < 2) {
+      let randomNumber = Math.floor(Math.random()*allWorkouts[2].length);
+      if (coreNumbers.indexOf(randomNumber) > -1) continue;
+      coreNumbers[coreNumbers.length] = randomNumber;
+    }
+
+  for (let i = 0; i < workoutNumbers.length; i += 1 ) {
+
+    if (workoutNumbers[i][0] === 0) {
+      workoutNumbers[i][1] = cardioNumbers[0];
+      cardioNumbers.splice(0, 1);
+    }
+    else if (workoutNumbers[i][0] === 1) {
+      workoutNumbers[i][1] = upperLowerBodyNumbers[0];
+      upperLowerBodyNumbers.splice(0, 1);
+    }
+    else if (workoutNumbers[i][0] === 2) {
+      workoutNumbers[i][1] = coreNumbers[0];
+      coreNumbers.splice(0, 1);
+    }
+
+  }
+  console.log(workoutNumbers);
+
+  console.log(workoutNumbers[0][0]);
+}
+
+function shuffleArray(a) {
+  // Fisher-Yates algorithm
+    for (let i = a.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+function workoutInterval() {
+
+  for (let i = 0; i < workoutNumbers.length; i += 1) {
+    document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutNumbers[i][0]][workoutNumbers[i][1]] [Object.keys(allWorkouts[ workoutNumbers[i][0] ][ workoutNumbers[i][1] ])[1]] + `)`;
+  }
+
+
+
+}
+
+console.log( allWorkouts[2][1] [Object.keys(allWorkouts[2][1])[1]]   );

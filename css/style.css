@@ -16,9 +16,9 @@ body {
   height:100%;
   color:#fff;
   background-color:#ff6912;
-  background: linear-gradient(-45deg,  #c44b09, #eaa927);
+  background: linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09);
   background-size: 400% 400%;
-  animation: Gradient 30s ease infinite;
+  animation: Gradient 40s ease infinite;
   font-family:"noto sans", sans-serif;
   display:grid;
   grid-template-columns:100%;
@@ -120,8 +120,8 @@ background-color:rgba(230,230,230,0.6);
   background-color:#92e6ff;
   height:32px;
   width:0%;
-  animation: gaugeColor 7s ease 0s, gaugeMove 160s linear 0s;
-  animation-iteration-count:infinite;
+  animation: gaugeColor 7s ease 0s, gaugeMove 230s linear 0s;
+  animation-fill-mode: forwards;
   animation-play-state: paused;
 
 }
@@ -148,8 +148,8 @@ background-color:rgba(230,230,230,0.6);
   padding: 0 8px;
   margin-top:5px;
   line-height:1.2;
-  animation: elapsedTimeMove 160s linear 0s;
-  animation-iteration-count:infinite;
+  animation: elapsedTimeMove 230s linear 0s;
+  animation-fill-mode: forwards;
   animation-play-state: paused;
 }
 
@@ -191,7 +191,7 @@ transition: opacity 0.25s ease-in-out;
   justify-content:center;
 }
 
-.secondsLeft {
+#secondsLeft {
   grid-area: secondsLeft;
   font-size:55px;
 }
@@ -227,7 +227,7 @@ transition: opacity 0.25s ease-in-out;
   max-width:600px;
   height:90%;
 
-  background-image:url("../img/JumpingJack1.png");
+
   background-repeat: no-repeat;
 background-size: contain;
 background-position: center;
@@ -235,9 +235,15 @@ background-position: center;
 
 #creditsArea {
   display:none;
-  background-color:rgba(255,255,255,0.4);
+  background-color:rgba(255,255,255,0.3);
   border-radius:20px;
   padding:0 20px;
+  opacity:0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+#hooray {
+  display:none;
   opacity:0;
   transition: opacity 0.25s ease-in-out;
 }

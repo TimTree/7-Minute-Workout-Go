@@ -178,7 +178,7 @@ transition: opacity 0.25s ease-in-out;
                         "secondsLeft";
 }
 
-.nameOfWorkout {
+#nameOfWorkout {
   font-size:65px;
   font-weight:700;
   grid-area: nameOfWorkout;

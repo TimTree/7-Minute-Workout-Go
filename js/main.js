@@ -156,11 +156,21 @@ function shuffleArray(a) {
 function workoutInterval() {
 
   for (let i = 0; i < workoutNumbers.length; i += 1) {
-    document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutNumbers[i][0]][workoutNumbers[i][1]] [Object.keys(allWorkouts[ workoutNumbers[i][0] ][ workoutNumbers[i][1] ])[1]] + `)`;
+
+    setTimeout(() => {
+      document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[i][0]][workoutNumbers[i][1]] [Object.keys(allWorkouts[ workoutNumbers[i][0] ][ workoutNumbers[i][1] ])[0]];
+      document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutNumbers[i][0]][workoutNumbers[i][1]] [Object.keys(allWorkouts[ workoutNumbers[i][0] ][ workoutNumbers[i][1] ])[1]] + `)`;
+
+      if (i < workoutNumbers.length - 1) {
+      document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutNumbers[i+1][0]][workoutNumbers[i+1][1]] [Object.keys(allWorkouts[ workoutNumbers[i+1][0] ][ workoutNumbers[i+1][1] ])[0]];
+    } else {
+      document.getElementById("nextWorkout").innerHTML = "Done!";
+    }
+  },3000*i);
   }
 
 
 
 }
 
-console.log( allWorkouts[2][1] [Object.keys(allWorkouts[2][1])[1]]   );
+console.log( allWorkouts[2][1] [Object.keys(allWorkouts[2][1])[0]]   );

@@ -2,7 +2,8 @@ let timerSeconds = 0;
 let timerMinutes = 0;
 let intime;
 let imgNum = 1;
-let workoutNumbers = [];
+let workoutCategory = [];
+let workoutName = [];
 
 document.getElementById("go").addEventListener("click", function(){
   go();
@@ -87,26 +88,33 @@ function add() {
 setTimeout(() => {document.getElementById("titleArea").style.opacity = "1";},100);
 
 function createWorkout() {
+  // 0 = cardio, 1 = upper/lower body, 2 = core
+  let workoutSchema = [2, 1, 0]; // clone workoutSchema
 
+  // Cardio must always go first, so shuffle the schema until 0 appears first
+  while (workoutSchema[0] != 0) {
+    shuffleArray(workoutSchema);
+  }
+
+  // Load the workout numbers to the workoutCategory array.
+  // These are the first 3 workout orders based on the category.
+  for (let i = 0; i<workoutSchema.length; i +=1 ) {
+    workoutCategory.push(workoutSchema[i]);
+  }
+
+  // Get another set of three workout orders. Cardio can be anywhere
+  // this time.
+  shuffleArray(workoutSchema);
+
+  for (let i = 0; i<workoutSchema.length; i +=1 ) {
+    workoutCategory.push(workoutSchema[i]);
+  }
+
+  // Randomly select workouts from each of the categories.
+  // Workouts cannot be repeated.
   let cardioNumbers = [];
   let upperLowerBodyNumbers = [];
   let coreNumbers = [];
-  let workoutSchemaSort = workoutSchema; // clone workoutSchema
-
-  while (workoutSchemaSort[0] != 0) {
-    shuffleArray(workoutSchemaSort);
-  }
-
-  for (let i = 0; i<workoutSchemaSort.length; i +=1 ) {
-    workoutNumbers.push([workoutSchemaSort[i],0]);
-  }
-
-  shuffleArray(workoutSchemaSort);
-
-  for (let i = 0; i<workoutSchemaSort.length; i +=1 ) {
-    workoutNumbers.push([workoutSchemaSort[i],0]);
-  }
-
   while (cardioNumbers.length < 2) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[0].length);
       if (cardioNumbers.indexOf(randomNumber) > -1) continue;
@@ -123,22 +131,25 @@ function createWorkout() {
       coreNumbers[coreNumbers.length] = randomNumber;
     }
 
-  for (let i = 0; i < workoutNumbers.length; i += 1 ) {
+  for (let i = 0; i < workoutCategory.length; i += 1 ) {
 
-    if (workoutNumbers[i][0] === 0) {
-      workoutNumbers[i][1] = cardioNumbers[0];
+    if (workoutCategory[i] === 0) { // if cardio
+      workoutName[i] = cardioNumbers[0];
       cardioNumbers.splice(0, 1);
     }
-    else if (workoutNumbers[i][0] === 1) {
-      workoutNumbers[i][1] = upperLowerBodyNumbers[0];
+    else if (workoutCategory[i] === 1) { // if upper/lower body
+      workoutName[i] = upperLowerBodyNumbers[0];
       upperLowerBodyNumbers.splice(0, 1);
     }
-    else if (workoutNumbers[i][0] === 2) {
-      workoutNumbers[i][1] = coreNumbers[0];
+    else if (workoutCategory[i] === 2) { // if core
+      workoutName[i] = coreNumbers[0];
       coreNumbers.splice(0, 1);
     }
 
   }
+
+  console.log(workoutCategory);
+  console.log(workoutName);
 }
 
 function shuffleArray(a) {
@@ -152,104 +163,132 @@ function shuffleArray(a) {
 
 function workoutInterval() {
 
-let workoutSetNumber = 0;
-let workoutSetNumberMinusBreaks = 0;
-
+  let workoutOn = 0;
   let intervalTimer = 30;
+  document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
+
+  let start = Date.now();
   let a = setInterval(() => {
-    intervalTimer -= 1;
-    if (intervalTimer != 0) {
-    document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
+
+  let diff = Date.now() - start;
+  let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+  if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+
+  if (elapsed != 0) {
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
   } else {
-    if (workoutSetNumber % 2 === 0) {
+    if (intervalTimer === 30) {
     intervalTimer = 10;
-    document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
-    workoutSetNumber += 1;
-    workoutSetNumberMinusBreaks += 1;
+    start = Date.now();
+    diff = Date.now() - start;
+    elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
   } else {
     intervalTimer = 30;
-    document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
-    workoutSetNumber += 1;
+    start = Date.now();
+    diff = Date.now() - start;
+    elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    }
   }
-  }
-  },1000);
+},1000);
 
-  let counter = 2;
+  let counter = 1;
 
   let b = setInterval(() => {
-    document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutNumbers[workoutSetNumberMinusBreaks][0]][workoutNumbers[workoutSetNumberMinusBreaks][1]] [Object.keys(allWorkouts[ workoutNumbers[workoutSetNumberMinusBreaks][0] ][ workoutNumbers[workoutSetNumberMinusBreaks][1] ])[counter]] + `)`;
-    counter += 1;
-        if(counter === 5) {
-            counter = 1;
-        }
+    if (counter === 1) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img2 + `)`;
+      counter += 1;
+    }
+    else if (counter === 2) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img3 + `)`;
+      counter += 1;
+    }
+    else if (counter === 3) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img4 + `)`;
+      counter += 1;
+    }
+    else if (counter === 4) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
+      counter = 1;
+    }
   },780);
 
   // Workout 1
-  document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[0][0]][workoutNumbers[0][1]] [Object.keys(allWorkouts[ workoutNumbers[0][0] ][ workoutNumbers[0][1] ])[0]];
-  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutNumbers[0][0]][workoutNumbers[0][1]] [Object.keys(allWorkouts[ workoutNumbers[0][0] ][ workoutNumbers[0][1] ])[1]] + `)`;
-  document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutNumbers[0+1][0]][workoutNumbers[0+1][1]] [Object.keys(allWorkouts[ workoutNumbers[0+1][0] ][ workoutNumbers[0+1][1] ])[0]];
+  document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[0]][workoutName[0]].name;
+  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[0]][workoutName[0]].img1 + `)`;
+  document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[0+1]][workoutName[0+1]].name;
 
   // Break 1
   setTimeout(() => {
+    workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
   },30000);
 
   // Workout 2
   setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[1][0]][workoutNumbers[1][1]] [Object.keys(allWorkouts[ workoutNumbers[1][0] ][ workoutNumbers[1][1] ])[0]];
+    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[1]][workoutName[1]].name;
     document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutNumbers[1+1][0]][workoutNumbers[1+1][1]] [Object.keys(allWorkouts[ workoutNumbers[1+1][0] ][ workoutNumbers[1+1][1] ])[0]];
+    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[1+1]][workoutName[1+1]].name;
   },40000);
 
   // Break 2
   setTimeout(() => {
+    workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
   },70000);
 
   // Workout 3
   setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[2][0]][workoutNumbers[2][1]] [Object.keys(allWorkouts[ workoutNumbers[2][0] ][ workoutNumbers[2][1] ])[0]];
+    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[2]][workoutName[2]].name;
     document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutNumbers[2+1][0]][workoutNumbers[2+1][1]] [Object.keys(allWorkouts[ workoutNumbers[2+1][0] ][ workoutNumbers[2+1][1] ])[0]];
+    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[2+1]][workoutName[2+1]].name;
   },80000);
 
   // Break 3
   setTimeout(() => {
+    workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
   },110000);
 
   // Workout 4
   setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[3][0]][workoutNumbers[3][1]] [Object.keys(allWorkouts[ workoutNumbers[3][0] ][ workoutNumbers[3][1] ])[0]];
+    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[3]][workoutName[3]].name;
     document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutNumbers[3+1][0]][workoutNumbers[3+1][1]] [Object.keys(allWorkouts[ workoutNumbers[3+1][0] ][ workoutNumbers[3+1][1] ])[0]];
+    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[3+1]][workoutName[3+1]].name;
   },120000);
 
   // Break 4
   setTimeout(() => {
+    workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
   },150000);
 
   // Workout 5
   setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[4][0]][workoutNumbers[4][1]] [Object.keys(allWorkouts[ workoutNumbers[4][0] ][ workoutNumbers[4][1] ])[0]];
+    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[4]][workoutName[4]].name;
     document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutNumbers[4+1][0]][workoutNumbers[4+1][1]] [Object.keys(allWorkouts[ workoutNumbers[4+1][0] ][ workoutNumbers[4+1][1] ])[0]];
+    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[4+1]][workoutName[4+1]].name;
   },160000);
 
   // Break 5
   setTimeout(() => {
+    workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
   },190000);
 
   // Workout 6
   setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutNumbers[5][0]][workoutNumbers[5][1]] [Object.keys(allWorkouts[ workoutNumbers[5][0] ][ workoutNumbers[5][1] ])[0]];
+    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[5]][workoutName[5]].name;
     document.getElementById("footage").style.opacity = 1;
     document.getElementById("nextWorkout").innerHTML = "Done!";
   },200000);
@@ -268,3 +307,4 @@ let workoutSetNumberMinusBreaks = 0;
 }
 
 console.log( allWorkouts[2][1] [Object.keys(allWorkouts[2][1])[0]]   );
+console.log(allWorkouts[2][1].name);

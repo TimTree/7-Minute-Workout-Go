@@ -1,5 +1,3 @@
-const workoutSchema = [1, 2, 0];
-
 const allWorkouts = [
   /* Cardio */ [
     { name: "Jumping Jacks",

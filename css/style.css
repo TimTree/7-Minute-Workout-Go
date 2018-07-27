@@ -50,11 +50,25 @@ body {
 #go {
   height: 280px;
   width: 280px;
+  border:none;
   border-radius: 50%;
-  border: 1px solid red;
   font-size:115px;
   font-family:montserrat;
   font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  outline:none;
+    box-shadow: 0 12px #999;
+    transition: background-color 0.1s;
+  background-color:#e1fbff;
+  color:#052a35;
+}
+
+#go:hover {background-color: #c3e0fd}
+
+#go:active {
+  box-shadow: 0 6px #999;
+  transform: translateY(6px);
 }
 
 .main {
@@ -120,7 +134,7 @@ background-color:rgba(230,230,230,0.6);
   background-color:#92e6ff;
   height:32px;
   width:0%;
-  animation: gaugeColor 7s ease 0s, gaugeMove 230s linear 0s;
+  animation: gaugeColor 7s ease 0s, gaugeMove 110s linear 0s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 
@@ -148,7 +162,7 @@ background-color:rgba(230,230,230,0.6);
   padding: 0 8px;
   margin-top:5px;
   line-height:1.2;
-  animation: elapsedTimeMove 230s linear 0s;
+  animation: elapsedTimeMove 110s linear 0s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 }
@@ -176,6 +190,8 @@ transition: opacity 0.25s ease-in-out;
   grid-template-areas: "nameOfWorkout"
                         "workoutImg"
                         "secondsLeft";
+  opacity:0;
+  transition: opacity 0.25s ease-in-out;
 }
 
 #nameOfWorkout {

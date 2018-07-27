@@ -7,52 +7,48 @@ let workoutName = [];
 
 document.getElementById("go").addEventListener("click", function(){
   go();
-    /*document.getElementById("body").style.gridTemplateRows = "80px 1fr";
-    document.getElementById("body").style.gridTemplateAreas = `"sidebar" "content"`;
-    document.getElementById("titleArea").style.display = "none";
-    document.getElementById("workoutArea").style.display = "grid";
-    document.getElementById("theBar").style.display = "block";*/
 });
 
 function titleToCredits() {
-  document.getElementById("titleArea").style.opacity = "0";
-  document.getElementById("titleArea").style.display = "none";
-  document.getElementById("creditsArea").style.display = "block";
-  setTimeout(() => {document.getElementById("creditsArea").style.opacity = "1";},50);
+  hide("titleArea");
+  show("creditsArea")
 }
 
 function creditsToTitle() {
-  document.getElementById("creditsArea").style.opacity = "0";
-  document.getElementById("titleArea").style.display = "block";
-  document.getElementById("creditsArea").style.display = "none";
-  setTimeout(() => {document.getElementById("titleArea").style.opacity = "1";},50);
+  hide("creditsArea");
+  show("titleArea");
 }
 
 function go() {
   createWorkout();
-  document.getElementById("titleArea").style.opacity = "0";
-  document.getElementById("titleArea").style.display = "none";
-  document.getElementById("countdown").style.display = "flex";
-  setTimeout(() => {document.getElementById("countdown").style.opacity = "1";},50);
+  hide("titleArea");
+  show("countdown", "flex");
   document.getElementById("numberCountdown").innerHTML="3";
   setTimeout(() => {document.getElementById("numberCountdown").innerHTML="2";},1000);
   setTimeout(() => {document.getElementById("numberCountdown").innerHTML="1";},2000);
-  setTimeout(() => {countdownToWorkout();startTimer();},3000);
+  setTimeout(() => {
+    countdownToWorkout();startTimer();},3000);
 }
 
 function countdownToWorkout() {
-  document.getElementById("body").style.gridTemplateRows = "80px 1fr";
-  document.getElementById("body").style.gridTemplateAreas = `"sidebar" "content"`;
-  document.getElementById("countdown").style.display = "none";
-  document.getElementById("workoutArea").style.display = "grid";
-  document.getElementById("theBar").style.display = "block";
+  showTheBar();
+  hide("countdown");
+  show("workoutArea", "grid");
   document.getElementById("active-gauge").style.animationPlayState="running";
   document.getElementById("elapsedTime").style.animationPlayState="running";
-  setTimeout(() => {document.getElementById("theBar").style.opacity = "1";},50);
   workoutInterval();
 }
 
+function hoorayToTitle() {
+  hideTheBar();
+  hide("hooray");
+  show("titleArea");
+}
+
 function startTimer() {
+  timerSeconds = 0;
+  timerMinutes = 0;
+document.getElementById("elapsedTime").innerHTML="0:00";
   intime=setInterval(stopwatch,1000);
   offset = Date.now();
 }
@@ -73,7 +69,7 @@ function add() {
     timerSeconds = Math.round((timerSeconds*1+(stopwatch2()/1000)));
     if (timerSeconds >= 60) {
         timerSeconds = 0;
-        timerMinutes++;
+        timerMinutes+=1;
     }
     document.getElementById("elapsedTime").innerHTML=timerMinutes + ":" + (timerSeconds > 9 ? timerSeconds : "0" + timerSeconds);
     }
@@ -88,6 +84,10 @@ function add() {
 setTimeout(() => {document.getElementById("titleArea").style.opacity = "1";},100);
 
 function createWorkout() {
+
+  workoutCategory = [];
+  workoutName = [];
+
   // 0 = cardio, 1 = upper/lower body, 2 = core
   let workoutSchema = [2, 1, 0]; // clone workoutSchema
 
@@ -102,6 +102,7 @@ function createWorkout() {
     workoutCategory.push(workoutSchema[i]);
   }
 
+/*
   // Get another set of three workout orders. Cardio can be anywhere
   // this time.
   shuffleArray(workoutSchema);
@@ -110,22 +111,23 @@ function createWorkout() {
     workoutCategory.push(workoutSchema[i]);
   }
 
+*/
   // Randomly select workouts from each of the categories.
   // Workouts cannot be repeated.
   let cardioNumbers = [];
   let upperLowerBodyNumbers = [];
   let coreNumbers = [];
-  while (cardioNumbers.length < 2) {
+  while (cardioNumbers.length < 1) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[0].length);
       if (cardioNumbers.indexOf(randomNumber) > -1) continue;
       cardioNumbers[cardioNumbers.length] = randomNumber;
     }
-    while (upperLowerBodyNumbers.length < 2) {
+    while (upperLowerBodyNumbers.length < 1) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[1].length);
       if (upperLowerBodyNumbers.indexOf(randomNumber) > -1) continue;
       upperLowerBodyNumbers[upperLowerBodyNumbers.length] = randomNumber;
     }
-    while (coreNumbers.length < 2) {
+    while (coreNumbers.length < 1) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[2].length);
       if (coreNumbers.indexOf(randomNumber) > -1) continue;
       coreNumbers[coreNumbers.length] = randomNumber;
@@ -163,34 +165,37 @@ function shuffleArray(a) {
 
 function workoutInterval() {
 
+  const timePerExercise = 30;
+  const timePerBreak = 10;
+
   let workoutOn = 0;
-  let intervalTimer = 30;
+  let intervalTimer = timePerExercise;
   document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
 
   let start = Date.now();
   let a = setInterval(() => {
 
-  let diff = Date.now() - start;
-  let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
-  if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+    let diff = Date.now() - start;
+    let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+    if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
 
-  if (elapsed != 0) {
-    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
-  } else {
-    if (intervalTimer === 30) {
-    intervalTimer = 10;
-    start = Date.now();
-    diff = Date.now() - start;
-    elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
-    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
-  } else {
-    intervalTimer = 30;
-    start = Date.now();
-    diff = Date.now() - start;
-    elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
-    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    if (elapsed != 0) {
+      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    } else {
+      if (intervalTimer === timePerExercise) {
+      intervalTimer = timePerBreak;
+      start = Date.now();
+      diff = Date.now() - start;
+      elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    } else {
+      intervalTimer = timePerExercise;
+      start = Date.now();
+      diff = Date.now() - start;
+      elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+      }
     }
-  }
 },1000);
 
   let counter = 1;
@@ -228,29 +233,29 @@ function workoutInterval() {
     workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
-  },30000);
+  },timePerExercise*1000);
 
   // Workout 2
   setTimeout(() => {
     document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[1]][workoutName[1]].name;
     document.getElementById("footage").style.opacity = 1;
     document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[1+1]][workoutName[1+1]].name;
-  },40000);
+  },(timePerExercise + timePerBreak)*1000);
 
   // Break 2
   setTimeout(() => {
     workoutOn += 1;
     document.getElementById("nameOfWorkout").innerHTML = "Rest";
     document.getElementById("footage").style.opacity = 0;
-  },70000);
+  },(timePerExercise * 2 + timePerBreak)*1000);
 
   // Workout 3
   setTimeout(() => {
     document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[2]][workoutName[2]].name;
     document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[2+1]][workoutName[2+1]].name;
-  },80000);
-
+    document.getElementById("nextWorkout").innerHTML = "Done!";
+  },(timePerExercise * 2 + timePerBreak * 2)*1000);
+/*
   // Break 3
   setTimeout(() => {
     workoutOn += 1;
@@ -291,20 +296,45 @@ function workoutInterval() {
     document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[5]][workoutName[5]].name;
     document.getElementById("footage").style.opacity = 1;
     document.getElementById("nextWorkout").innerHTML = "Done!";
-  },200000);
+  },200000); */
 
   // Done
   setTimeout(() => {
     clearInterval(a);
     clearInterval(b);
-    clearInterval(intime);
-    document.getElementById("workoutArea").style.opacity = "0";
-    document.getElementById("hooray").style.display = "block";
-    document.getElementById("workoutArea").style.display = "none";
-    setTimeout(() => {document.getElementById("hooray").style.opacity = "1";},50);
-  },230000);
+    hide("workoutArea");
+    show("hooray");
+  },(timePerExercise * 3 + timePerBreak * 2)*1000);
+  setTimeout(() => {clearInterval(intime);},(timePerExercise * 3 + timePerBreak * 2)*1001);
 
 }
 
-console.log( allWorkouts[2][1] [Object.keys(allWorkouts[2][1])[0]]   );
-console.log(allWorkouts[2][1].name);
+function hide(elementName) {
+  document.getElementById(elementName).style.opacity = "0";
+  document.getElementById(elementName).style.display = "none";
+}
+
+function show(elementName, display) {
+  if (display === "flex") {
+    document.getElementById(elementName).style.display = "flex";
+  } else if (display === "grid") {
+    document.getElementById(elementName).style.display = "grid";
+  } else {
+    document.getElementById(elementName).style.display = "block";
+  }
+  setTimeout(() => {document.getElementById(elementName).style.opacity = "1";},50);
+}
+
+function showTheBar() {
+  document.getElementById("body").style.gridTemplateRows = "80px 1fr";
+  document.getElementById("body").style.gridTemplateAreas = `"sidebar" "content"`;
+  document.getElementById("theBar").style.display = "block";
+  setTimeout(() => {document.getElementById("theBar").style.opacity = "1";},50);
+}
+
+function hideTheBar() {
+  document.getElementById("body").style.gridTemplateRows = "1fr";
+  document.getElementById("body").style.gridTemplateAreas = `"content"`;
+  document.getElementById("theBar").style.display = "none";
+  document.getElementById("theBar").style.opacity = "0";
+}

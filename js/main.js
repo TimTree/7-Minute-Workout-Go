@@ -4,6 +4,11 @@ let intime;
 let imgNum = 1;
 let workoutCategory = [];
 let workoutName = [];
+let workoutOn;
+let counter;
+const timePerExercise = 30;
+const timePerBreak = 10;
+let b;
 
 document.getElementById("go").addEventListener("click", function(){
   go();
@@ -165,148 +170,91 @@ function shuffleArray(a) {
 
 function workoutInterval() {
 
-  const timePerExercise = 30;
-  const timePerBreak = 10;
+  workoutOn = 0;
+  counter = 1;
+  b = setInterval(imageInterval,780);
+  showWorkout();
 
-  let workoutOn = 0;
+
+}
+
+function showWorkout() {
+
+
+
+
   let intervalTimer = timePerExercise;
   document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
-
   let start = Date.now();
   let a = setInterval(() => {
 
     let diff = Date.now() - start;
     let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
     if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+  },1000);
 
-    if (elapsed != 0) {
-      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
-    } else {
-      if (intervalTimer === timePerExercise) {
-      intervalTimer = timePerBreak;
-      start = Date.now();
-      diff = Date.now() - start;
-      elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
-      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
-    } else {
-      intervalTimer = timePerExercise;
-      start = Date.now();
-      diff = Date.now() - start;
-      elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
-      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
-      }
-    }
-},1000);
 
-  let counter = 1;
-
-  let b = setInterval(() => {
-    if (counter === 1) {
-      document.getElementById("footage").style.backgroundImage =
-      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img2 + `)`;
-      counter += 1;
-    }
-    else if (counter === 2) {
-      document.getElementById("footage").style.backgroundImage =
-      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img3 + `)`;
-      counter += 1;
-    }
-    else if (counter === 3) {
-      document.getElementById("footage").style.backgroundImage =
-      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img4 + `)`;
-      counter += 1;
-    }
-    else if (counter === 4) {
-      document.getElementById("footage").style.backgroundImage =
-      `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
-      counter = 1;
-    }
-  },780);
-
-  // Workout 1
-  document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[0]][workoutName[0]].name;
-  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[0]][workoutName[0]].img1 + `)`;
-  document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[0+1]][workoutName[0+1]].name;
-
-  // Break 1
-  setTimeout(() => {
-    workoutOn += 1;
-    document.getElementById("nameOfWorkout").innerHTML = "Rest";
-    document.getElementById("footage").style.opacity = 0;
-  },timePerExercise*1000);
-
-  // Workout 2
-  setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[1]][workoutName[1]].name;
-    document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[1+1]][workoutName[1+1]].name;
-  },(timePerExercise + timePerBreak)*1000);
-
-  // Break 2
-  setTimeout(() => {
-    workoutOn += 1;
-    document.getElementById("nameOfWorkout").innerHTML = "Rest";
-    document.getElementById("footage").style.opacity = 0;
-  },(timePerExercise * 2 + timePerBreak)*1000);
-
-  // Workout 3
-  setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[2]][workoutName[2]].name;
-    document.getElementById("footage").style.opacity = 1;
+  document.getElementById("footage").style.opacity = 1;
+  document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].name;
+  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
+  if (workoutOn === workoutCategory.length-1) {
     document.getElementById("nextWorkout").innerHTML = "Done!";
-  },(timePerExercise * 2 + timePerBreak * 2)*1000);
-/*
-  // Break 3
-  setTimeout(() => {
-    workoutOn += 1;
-    document.getElementById("nameOfWorkout").innerHTML = "Rest";
-    document.getElementById("footage").style.opacity = 0;
-  },110000);
+    setTimeout(finishWorkout,timePerExercise*1000);
+  } else {
+  document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn+1]][workoutName[workoutOn+1]].name;
+  setTimeout(showBreak,timePerExercise*1000);
+  }
+  setTimeout(() => {clearInterval(a);},timePerExercise*1000);
+}
 
-  // Workout 4
-  setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[3]][workoutName[3]].name;
-    document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[3+1]][workoutName[3+1]].name;
-  },120000);
+function showBreak() {
 
-  // Break 4
-  setTimeout(() => {
-    workoutOn += 1;
-    document.getElementById("nameOfWorkout").innerHTML = "Rest";
-    document.getElementById("footage").style.opacity = 0;
-  },150000);
+  let intervalTimer = timePerBreak;
+  document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
+  let start = Date.now();
+  let a = setInterval(() => {
 
-  // Workout 5
-  setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[4]][workoutName[4]].name;
-    document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[4+1]][workoutName[4+1]].name;
-  },160000);
+    let diff = Date.now() - start;
+    let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+    if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+  },1000);
 
-  // Break 5
-  setTimeout(() => {
-    workoutOn += 1;
-    document.getElementById("nameOfWorkout").innerHTML = "Rest";
-    document.getElementById("footage").style.opacity = 0;
-  },190000);
+  workoutOn += 1;
+  document.getElementById("nameOfWorkout").innerHTML = "Rest";
+  document.getElementById("footage").style.opacity = 0;
+  setTimeout(showWorkout,timePerBreak*1000);
+  setTimeout(() => {clearInterval(a);},timePerBreak*1000);
+}
 
-  // Workout 6
-  setTimeout(() => {
-    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[5]][workoutName[5]].name;
-    document.getElementById("footage").style.opacity = 1;
-    document.getElementById("nextWorkout").innerHTML = "Done!";
-  },200000); */
-
-  // Done
-  setTimeout(() => {
-    clearInterval(a);
-    clearInterval(b);
-    hide("workoutArea");
-    show("hooray");
-  },(timePerExercise * 3 + timePerBreak * 2)*1000);
-  setTimeout(() => {clearInterval(intime);},(timePerExercise * 3 + timePerBreak * 2)*1001);
-
+function finishWorkout() {
+  clearInterval(b);
+  hide("workoutArea");
+  show("hooray");
+    setTimeout(() => {clearInterval(intime);},1);
+}
+function imageInterval() {
+  if (counter === 1) {
+    document.getElementById("footage").style.backgroundImage =
+    `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img2 + `)`;
+    counter += 1;
+  }
+  else if (counter === 2) {
+    document.getElementById("footage").style.backgroundImage =
+    `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img3 + `)`;
+    counter += 1;
+  }
+  else if (counter === 3) {
+    document.getElementById("footage").style.backgroundImage =
+    `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img4 + `)`;
+    counter += 1;
+  }
+  else if (counter === 4) {
+    document.getElementById("footage").style.backgroundImage =
+    `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
+    counter = 1;
+  }
 }
 
 function hide(elementName) {

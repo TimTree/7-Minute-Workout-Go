@@ -58,16 +58,19 @@ body {
   cursor:pointer;
   text-decoration:none;
   outline:none;
-    box-shadow: 0 12px #999;
-    transition: background-color 0.1s;
-  background-color:#e1fbff;
+    box-shadow: 0 12px #7b7819;
+    transition: 0.15s;
+  background-color:#faffbc;
   color:#052a35;
 }
 
-#go:hover {background-color: #c3e0fd}
+#go:hover {
+  background-color: #edf771;
+  transform: scale(1.05);
+}
 
 #go:active {
-  box-shadow: 0 6px #999;
+  box-shadow: 0 6px #7b7819;
   transform: translateY(6px);
 }
 
@@ -123,6 +126,18 @@ body {
   font-size:36px;
 }
 
+#credits {
+  cursor:pointer;
+  transition:0.15s;
+  border-radius:10px;
+  padding:0 8px;
+}
+
+#credits:hover {
+  transform:scale(1.05);
+  background-color:rgba(255,255,255,0.2);
+}
+
 #gauge {
 background-color:rgba(230,230,230,0.6);
   margin:0 auto;
@@ -134,7 +149,7 @@ background-color:rgba(230,230,230,0.6);
   background-color:#92e6ff;
   height:32px;
   width:0%;
-  animation: gaugeColor 7s ease 0s, gaugeMove 110s linear 0s;
+  animation: gaugeColor 7s ease 0s, gaugeMove 55s linear 0s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 
@@ -162,7 +177,7 @@ background-color:rgba(230,230,230,0.6);
   padding: 0 8px;
   margin-top:5px;
   line-height:1.2;
-  animation: elapsedTimeMove 110s linear 0s;
+  animation: elapsedTimeMove 55s linear 0s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 }

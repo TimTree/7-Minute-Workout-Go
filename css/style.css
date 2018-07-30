@@ -149,7 +149,7 @@ background-color:rgba(230,230,230,0.6);
   background-color:#92e6ff;
   height:32px;
   width:0%;
-  animation: gaugeColor 7s ease 0s, gaugeMove 55s linear 0s;
+  animation: gaugeColor 7s ease 0s, gaugeMove 420s linear 0s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 
@@ -177,7 +177,7 @@ background-color:rgba(230,230,230,0.6);
   padding: 0 8px;
   margin-top:5px;
   line-height:1.2;
-  animation: elapsedTimeMove 55s linear 0s;
+  animation: elapsedTimeMove 420s linear 0s;
   animation-fill-mode: forwards;
   animation-play-state: paused;
 }

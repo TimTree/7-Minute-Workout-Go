@@ -107,32 +107,34 @@ function createWorkout() {
     workoutCategory.push(workoutSchema[i]);
   }
 
-/*
-  // Get another set of three workout orders. Cardio can be anywhere
-  // this time.
-  shuffleArray(workoutSchema);
 
-  for (let i = 0; i<workoutSchema.length; i +=1 ) {
-    workoutCategory.push(workoutSchema[i]);
+  // Get two other sets of three workout orders. Cardio can be anywhere
+  // this time.
+
+  for (let j = 1; j < 3; j += 1) {
+    shuffleArray(workoutSchema);
+
+    for (let i = 0; i<workoutSchema.length; i +=1 ) {
+      workoutCategory.push(workoutSchema[i]);
+    }
   }
 
-*/
   // Randomly select workouts from each of the categories.
   // Workouts cannot be repeated.
   let cardioNumbers = [];
   let upperLowerBodyNumbers = [];
   let coreNumbers = [];
-  while (cardioNumbers.length < 1) {
+  while (cardioNumbers.length < 3) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[0].length);
       if (cardioNumbers.indexOf(randomNumber) > -1) continue;
       cardioNumbers[cardioNumbers.length] = randomNumber;
     }
-    while (upperLowerBodyNumbers.length < 1) {
+    while (upperLowerBodyNumbers.length < 3) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[1].length);
       if (upperLowerBodyNumbers.indexOf(randomNumber) > -1) continue;
       upperLowerBodyNumbers[upperLowerBodyNumbers.length] = randomNumber;
     }
-    while (coreNumbers.length < 1) {
+    while (coreNumbers.length < 3) {
       let randomNumber = Math.floor(Math.random()*allWorkouts[2].length);
       if (coreNumbers.indexOf(randomNumber) > -1) continue;
       coreNumbers[coreNumbers.length] = randomNumber;

@@ -174,14 +174,9 @@ function workoutInterval() {
   counter = 1;
   b = setInterval(imageInterval,780);
   showWorkout();
-
-
 }
 
 function showWorkout() {
-
-
-
 
   let intervalTimer = timePerExercise;
   document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
@@ -194,18 +189,22 @@ function showWorkout() {
     document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
   },1000);
 
-
   document.getElementById("footage").style.opacity = 1;
   document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].name;
   document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
   if (workoutOn === workoutCategory.length-1) {
     document.getElementById("nextWorkout").innerHTML = "Done!";
-    setTimeout(finishWorkout,timePerExercise*1000);
+  var debugOnly = setTimeout(() => {finishWorkout();clearInterval(a);},timePerExercise*1000);
+  document.onkeydown = function(e) {
+    if (e.keyCode == 39) {clearTimeout(debugOnly);finishWorkout();clearInterval(a);}
+  }
   } else {
   document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn+1]][workoutName[workoutOn+1]].name;
-  setTimeout(showBreak,timePerExercise*1000);
+  var debugOnly = setTimeout(() => {showBreak();clearInterval(a);},timePerExercise*1000);
+  document.onkeydown = function(e) {
+    if (e.keyCode == 39) {clearTimeout(debugOnly);showBreak();clearInterval(a);}
   }
-  setTimeout(() => {clearInterval(a);},timePerExercise*1000);
+  }
 }
 
 function showBreak() {
@@ -224,16 +223,24 @@ function showBreak() {
   workoutOn += 1;
   document.getElementById("nameOfWorkout").innerHTML = "Rest";
   document.getElementById("footage").style.opacity = 0;
-  setTimeout(showWorkout,timePerBreak*1000);
-  setTimeout(() => {clearInterval(a);},timePerBreak*1000);
+  var debugOnly = setTimeout(() => {showWorkout();clearInterval(a);},timePerBreak*1000);
+  document.onkeydown = function(e) {
+    if (e.keyCode == 39) {clearTimeout(debugOnly);showWorkout();clearInterval(a);}
+  }
 }
 
 function finishWorkout() {
   clearInterval(b);
   hide("workoutArea");
   show("hooray");
+  document.getElementById("active-gauge").style.animationPlayState="paused";
+  document.getElementById("elapsedTime").style.animationPlayState="paused";
     setTimeout(() => {clearInterval(intime);},1);
+    document.onkeydown = function(e) {
+      if (e.keyCode == 39) {}
+    }
 }
+
 function imageInterval() {
   if (counter === 1) {
     document.getElementById("footage").style.backgroundImage =

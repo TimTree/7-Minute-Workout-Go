@@ -4,6 +4,7 @@ let intime;
 let imgNum = 1;
 let workoutCategory = [];
 let workoutName = [];
+let lastMinuteWorkout;
 let workoutOn;
 let counter;
 const timePerExercise = 30;
@@ -179,34 +180,34 @@ function workoutInterval() {
 }
 
 function showWorkout() {
-
-  let intervalTimer = timePerExercise;
-  document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
-  let start = Date.now();
-  let a = setInterval(() => {
-
-    let diff = Date.now() - start;
-    let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
-    if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
-    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
-  },1000);
-
-  document.getElementById("footage").style.opacity = 1;
-  document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].name;
-  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
-  if (workoutOn === workoutCategory.length-1) {
-    document.getElementById("nextWorkout").innerHTML = "Done!";
-  var debugOnly = setTimeout(() => {finishWorkout();clearInterval(a);},timePerExercise*1000);
-  document.onkeydown = function(e) {
-    if (e.keyCode == 39) {clearTimeout(debugOnly);finishWorkout();clearInterval(a);}
-  }
+  if (workoutOn === workoutCategory.length) {
+    showWorkoutLastMinute1();
   } else {
+    let intervalTimer = timePerExercise;
+    document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
+    let start = Date.now();
+    let a = setInterval(() => {
+
+      let diff = Date.now() - start;
+      let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+      if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+      document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    },1000);
+
+    document.getElementById("footage").style.opacity = 1;
+    document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].name;
+    document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
+    if (workoutOn === workoutCategory.length-1) {
+      lastMinuteWorkout = Math.floor(Math.random() * allWorkouts[3].length);
+      document.getElementById("nextWorkout").innerHTML = allWorkouts[3][lastMinuteWorkout].name;
+    } else {
   document.getElementById("nextWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn+1]][workoutName[workoutOn+1]].name;
+}
   var debugOnly = setTimeout(() => {showBreak();clearInterval(a);},timePerExercise*1000);
   document.onkeydown = function(e) {
     if (e.keyCode == 39) {clearTimeout(debugOnly);showBreak();clearInterval(a);}
   }
-  }
+}
 }
 
 function showBreak() {
@@ -223,12 +224,61 @@ function showBreak() {
   },1000);
 
   workoutOn += 1;
-  document.getElementById("nameOfWorkout").innerHTML = "Rest";
+  if (workoutOn === workoutCategory.length) {
+    document.getElementById("nameOfWorkout").innerHTML = "Rest (Last minute!)";
+    counter = 1;
+  } else {
+    document.getElementById("nameOfWorkout").innerHTML = "Rest";
+  }
   document.getElementById("footage").style.opacity = 0;
   var debugOnly = setTimeout(() => {showWorkout();clearInterval(a);},timePerBreak*1000);
   document.onkeydown = function(e) {
     if (e.keyCode == 39) {clearTimeout(debugOnly);showWorkout();clearInterval(a);}
   }
+}
+
+function showWorkoutLastMinute1() {
+  let intervalTimer = 30;
+  document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
+  let start = Date.now();
+  let a = setInterval(() => {
+
+    let diff = Date.now() - start;
+    let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+    if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+  },1000);
+  document.getElementById("footage").style.opacity = 1;
+  document.getElementById("nameOfWorkout").innerHTML = allWorkouts[3][lastMinuteWorkout].name;
+  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[3][lastMinuteWorkout].right1 + `)`;
+  document.getElementById("nextWorkout").innerHTML = "Switch sides!";
+var debugOnly = setTimeout(() => {showWorkoutLastMinute2();clearInterval(a);},timePerExercise*1000);
+document.onkeydown = function(e) {
+  if (e.keyCode == 39) {clearTimeout(debugOnly);showWorkoutLastMinute2();clearInterval(a);}
+}
+
+}
+
+function showWorkoutLastMinute2() {
+  counter = 3;
+  let intervalTimer = 30;
+  document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
+  let start = Date.now();
+  let a = setInterval(() => {
+
+    let diff = Date.now() - start;
+    let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
+    if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
+    document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+  },1000);
+  document.getElementById("nameOfWorkout").innerHTML = "Switch sides!";
+  document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[3][lastMinuteWorkout].left1 + `)`;
+  document.getElementById("nextWorkout").innerHTML = "Done!";
+var debugOnly = setTimeout(() => {finishWorkout();clearInterval(a);},timePerExercise*1000);
+document.onkeydown = function(e) {
+  if (e.keyCode == 39) {clearTimeout(debugOnly);finishWorkout();clearInterval(a);}
+}
+
 }
 
 function finishWorkout() {
@@ -244,6 +294,29 @@ function finishWorkout() {
 }
 
 function imageInterval() {
+
+  if (workoutOn === workoutCategory.length) {
+    if (counter === 1) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[3][lastMinuteWorkout].right2 + `)`;
+      counter += 1;
+    }
+    else if (counter === 2) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[3][lastMinuteWorkout].right1 + `)`;
+      counter = 1;
+    }
+    else if (counter === 3) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[3][lastMinuteWorkout].left2 + `)`;
+      counter += 1;
+    }
+    else if (counter === 4) {
+      document.getElementById("footage").style.backgroundImage =
+      `url( `+ allWorkouts[3][lastMinuteWorkout].left1 + `)`;
+      counter = 3;
+    }
+  } else {
   if (counter === 1) {
     document.getElementById("footage").style.backgroundImage =
     `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img2 + `)`;
@@ -264,6 +337,7 @@ function imageInterval() {
     `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
     counter = 1;
   }
+}
 }
 
 function hide(elementName) {

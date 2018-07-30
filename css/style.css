@@ -110,7 +110,7 @@ body {
   justify-content:center;
   align-items:center;
   text-align:right;
-  font-size:36px;
+  font-size:60px;
 }
 
 .goButton {
@@ -123,7 +123,7 @@ body {
   justify-content:center;
   align-items:center;
   text-align:left;
-  font-size:36px;
+  font-size:40px;
 }
 
 #credits {
@@ -136,6 +136,10 @@ body {
 #credits:hover {
   transform:scale(1.05);
   background-color:rgba(255,255,255,0.2);
+}
+
+#credits:active {
+  transform:scale(0.95);
 }
 
 #gauge {
@@ -294,4 +298,45 @@ background-position: center;
   height: 200px;
   width: 200px;
   border-radius: 50%;
+}
+
+#starsAndStreakLink {
+  cursor:pointer;
+  transition:0.15s;
+  border-radius:10px;
+  padding:0 8px;
+}
+
+#starsAndStreakLink:hover {
+  transform:scale(1.05);
+  background-color:rgba(255,255,255,0.2);
+}
+
+h2 {
+  font-family:montserrat;
+  font-size:60px;
+}
+
+.UIButton {
+  background-color:rgba(255,255,255,0.6);
+  border-radius:8px;
+  font-family:"noto sans",sans-serif;
+  font-size:30px;
+  padding:3px 14px;
+  margin:0;
+  cursor:pointer;
+  text-decoration:none;
+  outline:none;
+  transition: 0.15s;
+  border:0;
+}
+
+.UIButton:hover {
+background-color:rgba(255,255,255,0.8);
+transform:scale(1.05);
+}
+
+.UIButton:active {
+background-color:rgba(255,255,255,0.8);
+transform:scale(0.95);
 }

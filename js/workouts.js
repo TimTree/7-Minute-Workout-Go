@@ -1,3 +1,8 @@
+let saveData = {
+  name: "",
+  completedWorkoutDates: []
+}
+
 const allWorkouts = [
   /* Cardio */ [
     { name: "Jumping Jacks",

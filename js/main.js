@@ -11,9 +11,95 @@ const timePerExercise = 30;
 const timePerBreak = 10;
 let b;
 
+if(typeof(localStorage) !== "undefined") {
+  if (localStorage.getItem("7MinuteWorkoutGoSaveData")) {
+    saveData = JSON.parse(localStorage.getItem("7MinuteWorkoutGoSaveData"));
+  }
+}
+
+var isNotSafariPrivate = function() {
+  var doesItWork = 'test', storage = window.sessionStorage;
+  try {
+    storage.setItem(doesItWork, '1');
+    storage.removeItem(doesItWork);
+    return true;
+  }
+  catch (error) {
+    return false;
+  }
+}
+
+setTimeout(() => {
+  document.getElementById("titleArea").style.opacity = "1";
+  renderTitleText();
+},100);
+
+function renderTitleText() {
+  var d = new Date();
+  var hour = d.getHours();
+  if (hour >=5 && hour <=11) {
+    if (saveData.name === "") {
+    document.getElementById("intro-greeting").innerHTML = "Good morning!";
+    } else {
+    document.getElementById("intro-greeting").innerHTML = "Good morning, " + saveData.name + "!";
+    }
+  }
+  else if (hour >=12 && hour <=17) {
+    if (saveData.name === "") {
+    document.getElementById("intro-greeting").innerHTML = "Good afternoon!";
+    } else {
+    document.getElementById("intro-greeting").innerHTML = "Good afternoon, " + saveData.name + "!";
+    }
+  }
+  else if (hour >=18 && hour <=19) {
+    document.getElementById("intro-greeting").innerHTML = "Good evening!";
+  }
+  else if (hour >=20 && hour <=23) {
+    document.getElementById("intro-greeting").innerHTML = "Nice to see you this late at night!";
+  }
+  else {
+    document.getElementById("intro-greeting").innerHTML = "Hey there... *yawn*";
+  }
+}
+
 document.getElementById("go").addEventListener("click", function(){
   go();
 });
+
+document.getElementById("yourName").addEventListener('input', function (evt) {
+    saveData.name = document.getElementById("yourName").value;
+    save();
+});
+
+document.getElementById("orangeBackground").addEventListener("click", function(){
+  document.body.style.background = `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`;
+  document.body.style.backgroundSize =  `400% 400%`;
+  this.style.border = `6px solid white`;
+
+});
+
+document.getElementById("greenBackground").addEventListener("click", function(){
+  document.body.style.background = `linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504)`;
+  document.body.style.backgroundSize =  `400% 400%`;
+  this.style.border = `6px solid white`;
+});
+
+document.getElementById("blueBackground").addEventListener("click", function(){
+  document.body.style.background = `linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4)`;
+  document.body.style.backgroundSize =  `400% 400%`;
+  this.style.border = `6px solid white`;
+});
+document.getElementById("purpleBackground").addEventListener("click", function(){
+  document.body.style.background = `linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277)`;
+  document.body.style.backgroundSize =  `400% 400%`;
+  this.style.border = `6px solid white`;
+});
+
+function save() {
+  if ( isNotSafariPrivate() ) {
+    localStorage.setItem('7MinuteWorkoutGoSaveData', JSON.stringify(saveData));
+  }
+}
 
 function titleToCredits() {
   hide("titleArea");
@@ -23,6 +109,18 @@ function titleToCredits() {
 function creditsToTitle() {
   hide("creditsArea");
   show("titleArea");
+}
+
+function titleToPrefs() {
+  hide("titleArea");
+  show("prefsArea");
+  document.getElementById("yourName").value = saveData.name;
+}
+
+function prefsToTitle() {
+  hide("prefsArea");
+  show("titleArea");
+  renderTitleText();
 }
 
 function go() {
@@ -86,8 +184,6 @@ function add() {
     offset = now;
     return d;
     }
-
-setTimeout(() => {document.getElementById("titleArea").style.opacity = "1";},100);
 
 function createWorkout() {
 
@@ -225,7 +321,7 @@ function showBreak() {
 
   workoutOn += 1;
   if (workoutOn === workoutCategory.length) {
-    document.getElementById("nameOfWorkout").innerHTML = "Rest (Last minute!)";
+    document.getElementById("nameOfWorkout").innerHTML = "Rest (1 minute left!)";
     counter = 1;
   } else {
     document.getElementById("nameOfWorkout").innerHTML = "Rest";

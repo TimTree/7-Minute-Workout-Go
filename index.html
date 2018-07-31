@@ -38,7 +38,7 @@
 
 
       <div id="titleArea">
-        <p class="intro" id="intro-greeting">Hey <b>there!</b></p>
+        <p class="intro" id="intro-greeting"></p>
         <p class="intro" id="intro-goGetter">I know you're ready for a...</p>
         <div class="header">
           7 Minute Workout
@@ -46,8 +46,8 @@
         <div class="selection">
           <div class="starsAndStreak">
             <div id="starsAndStreakLink">
-              <p style="font-size:60px;margin:0;"><span style="display:inline-block;transform:rotate(160deg);"><b>&#9733</b></span> 1</p>
-              <p style="font-size:60px;margin:0;"><span style="display:inline-block;transform:rotate(200deg);"><b>↯</b></span> 1</p>
+              <p style="margin:0;"><span style="display:inline-block;transform:rotate(160deg);"><b>&#9733;</b></span> 1</p>
+              <p style="margin:0;"><span style="display:inline-block;transform:rotate(200deg);"><b>↯</b></span> 1</p>
             </div>
           </div>
           <div class="goButton">
@@ -55,15 +55,29 @@
           </div>
           <div class="prefsAndCredits">
             <div>
-              <p style="opacity:0.3;">Prefs</p>
-              <p id="credits" onclick="titleToCredits()">Credits</p>
+              <p class="credits" onclick="titleToPrefs()">Prefs</p><br>
+              <p class="credits" onclick="titleToCredits()">Credits</p>
             </div>
           </div>
         </div>
       </div>
 
+      <div id="prefsArea">
+        <h3>Prefs</h3>
+
+        <p>Your name: &nbsp; <input id="yourName"></input></p>
+        <p>Background</p>
+        <div style="display:flex;align-items:center;">
+        <div class="backgroundSelection" id="orangeBackground"></div>
+        <div class="backgroundSelection" id="greenBackground"></div>
+        <div class="backgroundSelection" id="blueBackground"></div>
+        <div class="backgroundSelection" id="purpleBackground"></div>
+      </div>
+        <p><button class="UIButton" onclick="prefsToTitle()">Go Back</button></p>
+      </div>
+
       <div id="creditsArea">
-        <h1>Credits</h1>
+        <h3>Credits</h3>
 
         <p><b>Creator:</b> Timothy Hsu (Tim's Slideshow Games)</p>
         <p>Made at Make School Summer Academy 2018</p>

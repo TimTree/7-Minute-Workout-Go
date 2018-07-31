@@ -17,6 +17,9 @@ body {
   color:#fff;
   background-color:#ff6912;
   background: linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09);
+  /*background:linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504);*/
+  /*background:linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4);*/
+  /*background:linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277);*/
   background-size: 400% 400%;
   animation: Gradient 40s ease infinite;
   font-family:"noto sans", sans-serif;
@@ -43,7 +46,7 @@ body {
   font-family:montserrat;
   font-weight:800;
   font-size:100px;
-  color:#fdce95;
+  color:#f7c281;
   text-shadow:2px 2px 5px rgba(20,20,20,0.4);
 }
 
@@ -126,19 +129,21 @@ body {
   font-size:40px;
 }
 
-#credits {
+.credits {
+  display:inline-block;
+  margin:0.5em;
   cursor:pointer;
   transition:0.15s;
   border-radius:10px;
   padding:0 8px;
 }
 
-#credits:hover {
+.credits:hover {
   transform:scale(1.05);
   background-color:rgba(255,255,255,0.2);
 }
 
-#credits:active {
+.credits:active {
   transform:scale(0.95);
 }
 
@@ -274,6 +279,17 @@ background-position: center;
   border-radius:20px;
   padding:0 20px;
   opacity:0;
+  font-size:24px;
+  transition: opacity 0.25s ease-in-out;
+}
+
+#prefsArea {
+  display:none;
+  background-color:rgba(255,255,255,0.3);
+  border-radius:20px;
+  padding:0 20px;
+  opacity:0;
+  font-size:24px;
   transition: opacity 0.25s ease-in-out;
 }
 
@@ -339,4 +355,70 @@ transform:scale(1.05);
 .UIButton:active {
 background-color:rgba(255,255,255,0.8);
 transform:scale(0.95);
+}
+
+#yourName {
+  font-size:26px;
+  width:8em;
+  text-align:center;
+  border-radius:5px;
+  background-color:rgba(0,0,0,0.2);
+  color:#fff;
+  border:0;
+  padding:5px 0;
+}
+
+#yourName:focus {
+  background-color: rgba(0,0,0,0.4);
+}
+
+input {
+  font-family: "noto sans", sans-serif;
+  transition:0.15s;
+}
+
+input:hover {
+  transform:scale(1.05);
+}
+
+input:focus {
+    outline: none;
+    transform:scale(1.05);
+}
+
+h3 {
+  font-size:36px;
+}
+
+.backgroundSelection {
+  width:75px;
+  height:75px;
+  display:inline-block;
+  margin:0 8px;
+  border-radius:12px;
+  transition: 0.15s;
+}
+
+.backgroundSelection:hover {
+  transform:scale(1.05);
+}
+
+.backgroundSelection:active {
+    transform:scale(0.95);
+}
+
+#orangeBackground {
+  background: linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09);
+}
+
+#greenBackground {
+  background:linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504);
+}
+
+#blueBackground {
+  background:linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4);
+}
+
+#purpleBackground {
+  background:linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277);
 }

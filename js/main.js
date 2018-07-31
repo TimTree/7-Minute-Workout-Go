@@ -32,6 +32,7 @@ var isNotSafariPrivate = function() {
 setTimeout(() => {
   document.getElementById("titleArea").style.opacity = "1";
   renderTitleText();
+  renderStarAndStreak();
 },100);
 
 function renderTitleText() {
@@ -60,6 +61,11 @@ function renderTitleText() {
   else {
     document.getElementById("intro-greeting").innerHTML = "Hey there... *yawn*";
   }
+}
+
+function renderStarAndStreak() {
+  document.getElementById("stars").innerHTML=saveData.completedWorkoutDates.length;
+  document.getElementById("streak").innerHTML="0";
 }
 
 document.getElementById("go").addEventListener("click", function(){
@@ -109,6 +115,7 @@ function titleToCredits() {
 function creditsToTitle() {
   hide("creditsArea");
   show("titleArea");
+  renderStarAndStreak();
 }
 
 function titleToPrefs() {
@@ -121,6 +128,7 @@ function prefsToTitle() {
   hide("prefsArea");
   show("titleArea");
   renderTitleText();
+  renderStarAndStreak();
 }
 
 function go() {
@@ -147,6 +155,7 @@ function hoorayToTitle() {
   hideTheBar();
   hide("hooray");
   show("titleArea");
+  renderStarAndStreak();
 }
 
 function startTimer() {
@@ -387,7 +396,26 @@ function finishWorkout() {
     document.onkeydown = function(e) {
       if (e.keyCode == 39) {}
     }
+        let dater = new Date();
+        let dateToYourTime = dater - (dater.getTimezoneOffset()*60000);
+    if (isDifferentDay(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-1],dateToYourTime)===true) {
+    saveData.completedWorkoutDates.push(dateToYourTime);
+    save();
+    }
 }
+
+function isDifferentDay(date1, date2) {
+  if (new Date(date1).getUTCFullYear() === new Date(date2).getUTCFullYear()
+  && new Date(date1).getUTCMonth() === new Date(date2).getUTCMonth()
+  && new Date(date1).getUTCDate() === new Date(date2).getUTCDate()
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+console.log(Date.parse(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-2]));
 
 function imageInterval() {
 

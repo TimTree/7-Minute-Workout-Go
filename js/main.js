@@ -61,11 +61,28 @@ function renderTitleText() {
   else {
     document.getElementById("intro-greeting").innerHTML = "Hey there... *yawn*";
   }
+
+  if (didWorkoutToday() === false) {
+      if (withinDay(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-1],
+        d) === false && saveData.streakHistory[saveData.streakHistory.length-1] != 0) {
+          saveData.streakHistory.push(0);
+          save();
+        }
+      }
 }
 
 function renderStarAndStreak() {
   document.getElementById("stars").innerHTML=saveData.completedWorkoutDates.length;
-  document.getElementById("streak").innerHTML="0";
+  document.getElementById("streak").innerHTML=saveData.streakHistory[saveData.streakHistory.length-1];
+}
+
+function didWorkoutToday() {
+  let dater = new Date();
+  if (isDifferentDay(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-1],dater)===true) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 document.getElementById("go").addEventListener("click", function(){
@@ -397,22 +414,38 @@ function finishWorkout() {
       if (e.keyCode == 39) {}
     }
         let dater = new Date();
-        let dateToYourTime = dater - (dater.getTimezoneOffset()*60000);
-    if (isDifferentDay(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-1],dateToYourTime)===true) {
-    saveData.completedWorkoutDates.push(dateToYourTime);
-    save();
+    if (isDifferentDay(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-1],dater)===true) {
+      saveData.completedWorkoutDates.push(dater);
+      saveData.streakHistory[saveData.streakHistory.length-1] += 1;
+      save();
     }
 }
 
 function isDifferentDay(date1, date2) {
-  if (new Date(date1).getUTCFullYear() === new Date(date2).getUTCFullYear()
-  && new Date(date1).getUTCMonth() === new Date(date2).getUTCMonth()
-  && new Date(date1).getUTCDate() === new Date(date2).getUTCDate()
+
+  if (new Date(date1).getFullYear() === new Date(date2).getFullYear()
+  && new Date(date1).getMonth() === new Date(date2).getMonth()
+  && new Date(date1).getDate() === new Date(date2).getDate()
   ) {
     return false;
   } else {
     return true;
   }
+}
+
+function withinDay(date1, date2) {
+    let dater1 = new Date(date1);
+    let dater2 = new Date(date2);
+    dater1.setDate(dater1.getDate());
+    dater2.setDate(dater2.getDate()-1);
+    if (dater1.getFullYear() === dater2.getFullYear()
+    && dater1.getMonth() === dater2.getMonth()
+    && dater1.getDate() === dater2.getDate()) {
+      return true;
+    } else {
+      return false;
+    }
+
 }
 
 console.log(Date.parse(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-2]));

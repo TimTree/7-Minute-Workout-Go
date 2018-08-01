@@ -1,6 +1,7 @@
 let saveData = {
   name: "",
-  completedWorkoutDates: []
+  completedWorkoutDates: [],
+  streakHistory: [0]
 }
 
 const allWorkouts = [

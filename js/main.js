@@ -73,9 +73,36 @@ function renderTitleText() {
 
   document.getElementById("stars").innerHTML=saveData.completedWorkoutDates.length;
   document.getElementById("streak").innerHTML=saveData.streakHistory[saveData.streakHistory.length-1];
+
+  if (saveData.completedWorkoutDates.length === 0) {
+    document.getElementById("initialHelp").style.display="flex";
+    document.getElementById("initialCredits").style.display="block";
+    document.getElementById("starsAndStreakLink").style.display="none";
+    document.getElementById("prefsAndCreditsLink").style.display="none";
+    document.getElementById("intro-greeting").innerHTML="Hey there. Welcome to my workout site!"
+  } else {
+    document.getElementById("initialHelp").style.display="none";
+    document.getElementById("initialCredits").style.display="none";
+    document.getElementById("starsAndStreakLink").style.display="block";
+    document.getElementById("prefsAndCreditsLink").style.display="block";
+  }
+
 }
 
-function renderStarAndStreak() {
+function pitch() {
+  hide("titleArea");
+  hide("prefsArea");
+  show("pitchArea");
+  document.getElementById("pitch1").innerHTML="The 7 minute workout trains the major muscles of your body in a short period of time.";
+  document.getElementById("pitch2").innerHTML="<img style = 'width:90%;max-width:600px;' src = './img/WorkoutGoPitch1.png'>"
+  document.getElementById("pitch3").innerHTML="<button class='UIButton' onclick='continuePitch()'>Next</button>";
+}
+
+function continuePitch() {
+  document.getElementById("pitch1").innerHTML="<i>7 Minute Workout Go</i> expands on <a href='http://www.thehealthjournals.com/save-time-with-the-7-minute-scientific-workout/'>the original routine.</a><br>" +
+  "It randomizes workouts each day.";
+  document.getElementById("pitch2").innerHTML="<img style = 'height:90%;max-height:200px;border-radius:20px;' src = './img/appIcon.png'>"
+  document.getElementById("pitch3").innerHTML="<button class='UIButton' onclick='pitchToTitle()''>Back to Title</button>";
 
 }
 
@@ -154,6 +181,11 @@ function titleToStats() {
 
 function statsToTitle() {
   hide("statsArea");
+  show("titleArea");
+}
+
+function pitchToTitle() {
+  hide("pitchArea");
   show("titleArea");
 }
 

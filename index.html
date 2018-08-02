@@ -46,6 +46,9 @@
         </div>
         <div class="selection">
           <div class="starsAndStreak">
+            <div id="initialHelp" onclick="pitch()">
+              ?
+            </div>
             <div id="starsAndStreakLink" onclick="titleToStats()">
               <p style="margin:0;"><span class="workoutStar"></span> <span id="stars"></span></p>
               <p style="margin:0;"><span class="streakArrow"></span> <span id="streak"></span></p>
@@ -55,12 +58,21 @@
             <button type="button" name="button" id="go">GO!</button>
           </div>
           <div class="prefsAndCredits">
-            <div>
+            <div id="initialCredits">
+              <p class="credits" onclick="titleToCredits()">Credits</p>
+            </div>
+            <div id="prefsAndCreditsLink">
               <p class="credits" onclick="titleToPrefs()">Prefs</p><br>
               <p class="credits" onclick="titleToCredits()">Credits</p>
             </div>
           </div>
         </div>
+      </div>
+
+      <div id="pitchArea">
+        <p id="pitch1"></p>
+        <p id="pitch2"></p>
+        <p id="pitch3"></p>
       </div>
 
       <div id="statsArea">
@@ -83,6 +95,7 @@
         <div class="backgroundSelection" id="blueBackground"></div>
         <div class="backgroundSelection" id="purpleBackground"></div>
       </div>
+        <p><button class="PrefsButton" onclick="pitch()">View Initial Help</button></p>
         <p><button class="UIButton" onclick="prefsToTitle()">Go Back</button></p>
       </div>
 

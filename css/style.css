@@ -293,6 +293,16 @@ background-position: center;
   transition: opacity 0.25s ease-in-out;
 }
 
+#statsArea {
+  display:none;
+  background-color:rgba(255,255,255,0.3);
+  border-radius:20px;
+  padding:0 20px;
+  opacity:0;
+  font-size:24px;
+  transition: opacity 0.25s ease-in-out;
+}
+
 #hooray {
   display:none;
   opacity:0;
@@ -328,9 +338,14 @@ background-position: center;
   background-color:rgba(255,255,255,0.2);
 }
 
+#starsAndStreakLink:active {
+  transform:scale(0.95);
+}
+
 h2 {
   font-family:montserrat;
   font-size:60px;
+  margin: 0.5em 0;
 }
 
 .UIButton {
@@ -348,12 +363,11 @@ h2 {
 }
 
 .UIButton:hover {
-background-color:rgba(255,255,255,0.8);
+background-color:rgba(255,255,255,0.85);
 transform:scale(1.05);
 }
 
 .UIButton:active {
-background-color:rgba(255,255,255,0.8);
 transform:scale(0.95);
 }
 
@@ -388,6 +402,7 @@ input:focus {
 
 h3 {
   font-size:36px;
+  margin:0.6em 0;
 }
 
 .backgroundSelection {
@@ -421,4 +436,37 @@ h3 {
 
 #purpleBackground {
   background:linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277);
+}
+
+.workoutStar {
+  display:inline-block;
+  transform:rotate(160deg);
+  font-weight:700;
+}
+
+.workoutStar::before {
+  content: "★";
+}
+
+.streakArrow {
+  display:inline-block;
+  transform:rotate(200deg);
+  font-weight:700;
+}
+
+.streakArrow::before {
+  content: "↯";
+}
+
+.para1 {
+  font-size:24px;
+}
+
+#starGet2 {
+  font-size:80px;
+  margin: 0.3em 0;
+}
+
+.smallMargin {
+  margin:0.6em 0;
 }

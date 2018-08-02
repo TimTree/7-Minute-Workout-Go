@@ -30,9 +30,7 @@ var isNotSafariPrivate = function() {
 }
 
 setTimeout(() => {
-  document.getElementById("titleArea").style.opacity = "1";
-  renderTitleText();
-  renderStarAndStreak();
+  show("titleArea");
 },100);
 
 function renderTitleText() {
@@ -42,14 +40,14 @@ function renderTitleText() {
     if (saveData.name === "") {
     document.getElementById("intro-greeting").innerHTML = "Good morning!";
     } else {
-    document.getElementById("intro-greeting").innerHTML = "Good morning, " + saveData.name + "!";
+    document.getElementById("intro-greeting").innerHTML = "Good morning, <b>" + saveData.name + "</b>!";
     }
   }
   else if (hour >=12 && hour <=17) {
     if (saveData.name === "") {
     document.getElementById("intro-greeting").innerHTML = "Good afternoon!";
     } else {
-    document.getElementById("intro-greeting").innerHTML = "Good afternoon, " + saveData.name + "!";
+    document.getElementById("intro-greeting").innerHTML = "Good afternoon, <b>" + saveData.name + "</b>!";
     }
   }
   else if (hour >=18 && hour <=19) {
@@ -68,12 +66,17 @@ function renderTitleText() {
           saveData.streakHistory.push(0);
           save();
         }
-      }
+      document.getElementById("intro-goGetter").innerHTML="I know you're ready for a..."
+  } else {
+    document.getElementById("intro-goGetter").innerHTML="You finished your workout today. Up to you if you wanna go again."
+  }
+
+  document.getElementById("stars").innerHTML=saveData.completedWorkoutDates.length;
+  document.getElementById("streak").innerHTML=saveData.streakHistory[saveData.streakHistory.length-1];
 }
 
 function renderStarAndStreak() {
-  document.getElementById("stars").innerHTML=saveData.completedWorkoutDates.length;
-  document.getElementById("streak").innerHTML=saveData.streakHistory[saveData.streakHistory.length-1];
+
 }
 
 function didWorkoutToday() {
@@ -132,20 +135,26 @@ function titleToCredits() {
 function creditsToTitle() {
   hide("creditsArea");
   show("titleArea");
-  renderStarAndStreak();
 }
 
 function titleToPrefs() {
   hide("titleArea");
   show("prefsArea");
-  document.getElementById("yourName").value = saveData.name;
 }
 
 function prefsToTitle() {
   hide("prefsArea");
   show("titleArea");
-  renderTitleText();
-  renderStarAndStreak();
+}
+
+function titleToStats() {
+  hide("titleArea");
+  show("statsArea");
+}
+
+function statsToTitle() {
+  hide("statsArea");
+  show("titleArea");
 }
 
 function go() {
@@ -172,6 +181,7 @@ function hoorayToTitle() {
   hideTheBar();
   hide("hooray");
   show("titleArea");
+  renderTitleText();
   renderStarAndStreak();
 }
 
@@ -201,7 +211,8 @@ function add() {
         timerSeconds = 0;
         timerMinutes+=1;
     }
-    document.getElementById("elapsedTime").innerHTML=timerMinutes + ":" + (timerSeconds > 9 ? timerSeconds : "0" + timerSeconds);
+    document.getElementById("elapsedTime").innerHTML=
+    timerMinutes + ":" + (timerSeconds > 9 ? timerSeconds : "0" + timerSeconds);
     }
 
     function stopwatch2() {
@@ -229,7 +240,6 @@ function createWorkout() {
   for (let i = 0; i<workoutSchema.length; i +=1 ) {
     workoutCategory.push(workoutSchema[i]);
   }
-
 
   // Get two other sets of three workout orders. Cardio can be anywhere
   // this time.
@@ -318,7 +328,8 @@ function showWorkout() {
 
     document.getElementById("footage").style.opacity = 1;
     document.getElementById("nameOfWorkout").innerHTML = allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].name;
-    document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
+    document.getElementById("footage").style.backgroundImage =
+    `url( `+ allWorkouts[workoutCategory[workoutOn]][workoutName[workoutOn]].img1 + `)`;
     if (workoutOn === workoutCategory.length-1) {
       lastMinuteWorkout = Math.floor(Math.random() * allWorkouts[3].length);
       document.getElementById("nextWorkout").innerHTML = allWorkouts[3][lastMinuteWorkout].name;
@@ -418,6 +429,12 @@ function finishWorkout() {
       saveData.completedWorkoutDates.push(dater);
       saveData.streakHistory[saveData.streakHistory.length-1] += 1;
       save();
+      document.getElementById("starGet").innerHTML="Here's your star for today:";
+      document.getElementById("starGet2").innerHTML="<span class='workoutStar'></span> "
+       + saveData.completedWorkoutDates.length;
+    } else {
+      document.getElementById("starGet").innerHTML="";
+      document.getElementById("starGet2").innerHTML="";
     }
 }
 
@@ -447,8 +464,6 @@ function withinDay(date1, date2) {
     }
 
 }
-
-console.log(Date.parse(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-2]));
 
 function imageInterval() {
 
@@ -511,6 +526,23 @@ function show(elementName, display) {
     document.getElementById(elementName).style.display = "block";
   }
   setTimeout(() => {document.getElementById(elementName).style.opacity = "1";},50);
+  if (elementName === "titleArea") {
+    renderTitleText();
+  }
+  else if (elementName === "prefsArea") {
+      document.getElementById("yourName").value = saveData.name;
+  }
+  else if (elementName === "statsArea") {
+    if (saveData.name === "") {
+      document.getElementById("yourStats").innerHTML = saveData.name + "Your Stats";
+    } else {
+      document.getElementById("yourStats").innerHTML = saveData.name + "'s Stats";
+      document.getElementById("startDate").innerHTML = saveData.completedWorkoutDates[0].substring(0, 10);
+      document.getElementById("totalStars").innerHTML = saveData.completedWorkoutDates.length;
+      document.getElementById("dailyStreak").innerHTML = saveData.streakHistory[saveData.streakHistory.length-1];
+      document.getElementById("maxStreak").innerHTML = Math.max.apply(null, saveData.streakHistory);
+    }
+  }
 }
 
 function showTheBar() {

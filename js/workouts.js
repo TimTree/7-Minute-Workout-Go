@@ -4,6 +4,10 @@ let saveData = {
   streakHistory: [0]
 }
 
+const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",
+  "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."
+];
+
 const allWorkouts = [
   /* Cardio */ [
     { name: "Jumping Jacks",

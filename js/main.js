@@ -463,7 +463,7 @@ function finishWorkout() {
     }
         let dater = new Date();
     if (isDifferentDay(saveData.completedWorkoutDates[saveData.completedWorkoutDates.length-1],dater)===true) {
-      saveData.completedWorkoutDates.push(dater);
+      saveData.completedWorkoutDates.push(JSON.parse(JSON.stringify(dater)));
       saveData.streakHistory[saveData.streakHistory.length-1] += 1;
       save();
       if (saveData.completedWorkoutDates.length === 1) {
@@ -629,7 +629,11 @@ function show(elementName, display) {
     } else {
       document.getElementById("yourStats").innerHTML = saveData.name + "'s Stats";
     }
-    document.getElementById("startDate").innerHTML = saveData.completedWorkoutDates[0].substring(0, 10);
+    document.getElementById("startDate").innerHTML =
+    monthNames[new Date(saveData.completedWorkoutDates[0]).getMonth()] + " "
+    + new Date(saveData.completedWorkoutDates[0]).getDate() + ", "
+    +  new Date(saveData.completedWorkoutDates[0]).getFullYear();
+    ;
     document.getElementById("totalStars").innerHTML = saveData.completedWorkoutDates.length;
     document.getElementById("dailyStreak").innerHTML = saveData.streakHistory[saveData.streakHistory.length-1];
     document.getElementById("maxStreak").innerHTML = Math.max.apply(null, saveData.streakHistory);

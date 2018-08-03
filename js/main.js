@@ -99,7 +99,7 @@ function pitch() {
 }
 
 function continuePitch() {
-  document.getElementById("pitch1").innerHTML="<i>7 Minute Workout Go</i> expands on <a href='http://www.thehealthjournals.com/save-time-with-the-7-minute-scientific-workout/'>the original routine.</a><br>" +
+  document.getElementById("pitch1").innerHTML="<i>7 Minute Workout Go</i> expands on <a href='http://www.thehealthjournals.com/save-time-with-the-7-minute-scientific-workout/' target='_blank'>the original routine.</a><br>" +
   "It randomizes workouts each day.";
   document.getElementById("pitch2").innerHTML="<img style = 'height:90%;max-height:200px;border-radius:20px;' src = './img/appIcon.png'>"
   document.getElementById("pitch3").innerHTML="<button class='UIButton' onclick='pitchToTitle()''>Back to Title</button>";

@@ -189,6 +189,11 @@ function pitchToTitle() {
   show("titleArea");
 }
 
+function introToTitle() {
+  hide("initialSetUp");
+  show("titleArea");
+}
+
 function go() {
   createWorkout();
   hide("titleArea");
@@ -213,8 +218,6 @@ function hoorayToTitle() {
   hideTheBar();
   hide("hooray");
   show("titleArea");
-  renderTitleText();
-  renderStarAndStreak();
 }
 
 function startTimer() {
@@ -450,6 +453,8 @@ function finishWorkout() {
   clearInterval(b);
   hide("workoutArea");
   show("hooray");
+  document.getElementById("youAreDone").innerHTML="You're done with your 7 minute workout.";
+  document.getElementById("goToTitle").innerHTML="<button class='UIButton' onclick='hoorayToTitle()'>Back to Title</button>";
   document.getElementById("active-gauge").style.animationPlayState="paused";
   document.getElementById("elapsedTime").style.animationPlayState="paused";
     setTimeout(() => {clearInterval(intime);},1);
@@ -461,13 +466,67 @@ function finishWorkout() {
       saveData.completedWorkoutDates.push(dater);
       saveData.streakHistory[saveData.streakHistory.length-1] += 1;
       save();
-      document.getElementById("starGet").innerHTML="Here's your star for today:";
-      document.getElementById("starGet2").innerHTML="<span class='workoutStar'></span> "
-       + saveData.completedWorkoutDates.length;
+      if (saveData.completedWorkoutDates.length === 1) {
+        document.getElementById("youAreDone").innerHTML="You're done with your first 7 minute workout.";
+        document.getElementById("starGet").innerHTML="Take a breather and click Continue when you're ready.";
+        document.getElementById("goToTitle").innerHTML="<button class='UIButton' onclick='getName()'>Continue</button>";
+      } else {
+        document.getElementById("starGet").innerHTML="Here's your star for today:";
+        document.getElementById("starGet2").innerHTML="<span class='workoutStar'></span> "
+         + saveData.completedWorkoutDates.length;
+       }
     } else {
       document.getElementById("starGet").innerHTML="";
       document.getElementById("starGet2").innerHTML="";
     }
+}
+
+function getName() {
+  hideTheBar();
+  hide("hooray");
+  show("initialSetUp");
+  document.getElementById("initialSetUp").innerHTML=`
+  <p>You did great out there!</p>
+  <p>By the way, <b>what's your name?</b> I'd like to call you that from here on out.</p>
+  <p style="display:flex;align-items:center;justify-content:center;">
+  <form name="yourNamer" onsubmit="return enterName(document.yourNamer.yourName1.value)">
+  <input id="yourName1" maxlength="12"></input> &nbsp;&nbsp;&nbsp; <button type="submit" class="UIButton">Enter</button>
+  </form>
+  </p>
+  <p><button class="PrefsButton" onclick="enterName('')">Skip Name</button></p>
+  `;
+}
+
+function enterName(theName) {
+  if (theName === "") {
+    document.getElementById("initialSetUp").innerHTML=`
+    <p>No name? No worries, you can always let me know later.</p>
+    `;
+  } else {
+    saveData.name = theName;
+    save();
+    document.getElementById("initialSetUp").innerHTML=`
+    <p><b>` + theName + `</b>, you say? I like that name!</p>
+    `;
+  }
+  document.getElementById("initialSetUp").innerHTML+=`
+  <p>Here's your star for completing a workout today.</p>
+  <p style="font-size:80px;margin: 0.3em 0;"><span class='workoutStar'></span> ` + saveData.completedWorkoutDates.length + `</p>
+  <p>You'll earn a <span class='workoutStar'></span> star each day you finish a workout.
+  Try to raise your <span class="streakArrow"></span> streak by doing the workout every day.</p>
+  <button class='UIButton' onclick='nextIntroSlide()'>Continue</button>
+  `;
+  return false;
+}
+
+function nextIntroSlide() {
+  document.getElementById("initialSetUp").innerHTML=`
+  <p>Worried about losing motivation?</p>
+  <p>Don't worry: <b>the workout randomizes each day</b> to shake things up.</p>
+  <p style="font-size:16px;">And if you're daring, you can make this site your homepage.</p>
+  <p>Hope to see you tomorrow!</p>
+  <button class='UIButton' onclick='introToTitle()'>Back to Title</button>
+  `;
 }
 
 function isDifferentDay(date1, date2) {
@@ -569,11 +628,11 @@ function show(elementName, display) {
       document.getElementById("yourStats").innerHTML = saveData.name + "Your Stats";
     } else {
       document.getElementById("yourStats").innerHTML = saveData.name + "'s Stats";
-      document.getElementById("startDate").innerHTML = saveData.completedWorkoutDates[0].substring(0, 10);
-      document.getElementById("totalStars").innerHTML = saveData.completedWorkoutDates.length;
-      document.getElementById("dailyStreak").innerHTML = saveData.streakHistory[saveData.streakHistory.length-1];
-      document.getElementById("maxStreak").innerHTML = Math.max.apply(null, saveData.streakHistory);
     }
+    document.getElementById("startDate").innerHTML = saveData.completedWorkoutDates[0].substring(0, 10);
+    document.getElementById("totalStars").innerHTML = saveData.completedWorkoutDates.length;
+    document.getElementById("dailyStreak").innerHTML = saveData.streakHistory[saveData.streakHistory.length-1];
+    document.getElementById("maxStreak").innerHTML = Math.max.apply(null, saveData.streakHistory);
   }
 }
 

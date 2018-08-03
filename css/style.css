@@ -325,6 +325,14 @@ background-position: center;
   transition: opacity 0.25s ease-in-out;
 }
 
+#initialSetUp {
+  font-size:28px;
+  max-width:800px;
+  display:none;
+  opacity:0;
+  transition: opacity 0.25s ease-in-out;
+}
+
 #numberCountdown {
   display:flex;
   align-items:center;
@@ -417,6 +425,21 @@ transform:scale(0.95);
 }
 
 #yourName:focus {
+  background-color: rgba(0,0,0,0.4);
+}
+
+#yourName1 {
+  font-size:40px;
+  width:8em;
+  text-align:center;
+  border-radius:5px;
+  background-color:rgba(0,0,0,0.2);
+  color:#fff;
+  border:0;
+  padding:5px 0;
+}
+
+#yourName1:focus {
   background-color: rgba(0,0,0,0.4);
 }
 

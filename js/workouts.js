@@ -2,7 +2,7 @@ let saveData = {
   name: "",
   completedWorkoutDates: [],
   streakHistory: [0],
-  bgColor: "",
+  bgColor: `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`
 }
 
 const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",

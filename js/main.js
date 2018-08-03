@@ -29,6 +29,9 @@ var isNotSafariPrivate = function() {
   }
 }
 
+document.body.style.background = saveData.bgColor;
+document.body.style.backgroundSize = `400% 400%`;
+
 setTimeout(() => {
   show("titleArea");
 },100);
@@ -86,7 +89,6 @@ function renderTitleText() {
     document.getElementById("starsAndStreakLink").style.display="block";
     document.getElementById("prefsAndCreditsLink").style.display="block";
   }
-
 }
 
 function pitch() {
@@ -125,27 +127,36 @@ document.getElementById("yourName").addEventListener('input', function (evt) {
 });
 
 document.getElementById("orangeBackground").addEventListener("click", function(){
-  document.body.style.background = `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`;
+  saveData.bgColor = `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`;
+  save();
+  document.body.style.background = saveData.bgColor;
   document.body.style.backgroundSize =  `400% 400%`;
-  this.style.border = `6px solid white`;
+highlightBgColor();
 
 });
 
 document.getElementById("greenBackground").addEventListener("click", function(){
-  document.body.style.background = `linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504)`;
+  saveData.bgColor = `linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504)`;
+  save();
+  document.body.style.background = saveData.bgColor;
   document.body.style.backgroundSize =  `400% 400%`;
-  this.style.border = `6px solid white`;
+  highlightBgColor();
 });
 
 document.getElementById("blueBackground").addEventListener("click", function(){
-  document.body.style.background = `linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4)`;
+  saveData.bgColor = `linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4)`;
+  save();
+  document.body.style.background = saveData.bgColor;
   document.body.style.backgroundSize =  `400% 400%`;
-  this.style.border = `6px solid white`;
+  highlightBgColor();
 });
+
 document.getElementById("purpleBackground").addEventListener("click", function(){
-  document.body.style.background = `linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277)`;
+  saveData.bgColor = `linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277)`;
+  save();
+  document.body.style.background = saveData.bgColor;
   document.body.style.backgroundSize =  `400% 400%`;
-  this.style.border = `6px solid white`;
+  highlightBgColor();
 });
 
 function save() {
@@ -630,6 +641,7 @@ function show(elementName, display) {
   }
   else if (elementName === "prefsArea") {
       document.getElementById("yourName").value = saveData.name;
+      highlightBgColor();
   }
   else if (elementName === "statsArea") {
     if (saveData.name === "") {
@@ -645,6 +657,25 @@ function show(elementName, display) {
     document.getElementById("totalStars").innerHTML = saveData.completedWorkoutDates.length;
     document.getElementById("dailyStreak").innerHTML = saveData.streakHistory[saveData.streakHistory.length-1];
     document.getElementById("maxStreak").innerHTML = Math.max.apply(null, saveData.streakHistory);
+  }
+}
+
+function highlightBgColor() {
+  document.getElementById("orangeBackground").style.border="0";
+  document.getElementById("greenBackground").style.border="0";
+  document.getElementById("blueBackground").style.border="0";
+  document.getElementById("purpleBackground").style.border="0";
+  if (saveData.bgColor === `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`) {
+    document.getElementById("orangeBackground").style.border = `6px solid white`;
+  }
+  if (saveData.bgColor === `linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504)`) {
+    document.getElementById("greenBackground").style.border = `6px solid white`;
+  }
+  if (saveData.bgColor === `linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4)`) {
+    document.getElementById("blueBackground").style.border = `6px solid white`;
+  }
+  if (saveData.bgColor === `linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277)`) {
+    document.getElementById("purpleBackground").style.border = `6px solid white`;
   }
 }
 

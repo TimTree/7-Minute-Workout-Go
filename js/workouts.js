@@ -1,7 +1,8 @@
 let saveData = {
   name: "",
   completedWorkoutDates: [],
-  streakHistory: [0]
+  streakHistory: [0],
+  bgColor: "",
 }
 
 const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",

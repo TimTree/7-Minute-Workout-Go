@@ -498,6 +498,8 @@ function getName() {
 }
 
 function enterName(theName) {
+  hide("initialSetUp");
+  setTimeout ( () => {show("initialSetUp")}, 1);
   if (theName === "") {
     document.getElementById("initialSetUp").innerHTML=`
     <p>No name? No worries, you can always let me know later.</p>
@@ -520,12 +522,18 @@ function enterName(theName) {
 }
 
 function nextIntroSlide() {
+  hide("initialSetUp");
+  setTimeout ( () => {show("initialSetUp")}, 1);
   document.getElementById("initialSetUp").innerHTML=`
   <p>Worried about losing motivation?</p>
   <p>Don't worry: <b>the workout randomizes each day</b> to shake things up.</p>
-  <p style="font-size:16px;">And if you're daring, you can make this site your homepage.</p>
-  <p>Hope to see you tomorrow!</p>
-  <button class='UIButton' onclick='introToTitle()'>Back to Title</button>
+  <p style="font-size:16px;">And if you're daring, you can make this site your homepage.</p>`;
+  if (saveData.name === "") {
+  document.getElementById("initialSetUp").innerHTML+= `<p>Hope to see you tomorrow!</p>`;
+} else {
+  document.getElementById("initialSetUp").innerHTML+= `<p>Hope to see you tomorrow, ` + saveData.name + `!</p>`;
+}
+  document.getElementById("initialSetUp").innerHTML+= `<button class='UIButton' onclick='introToTitle()'>Back to Title</button>
   `;
 }
 

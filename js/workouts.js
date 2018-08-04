@@ -38,7 +38,7 @@ const allWorkouts = [
     { name: "Step Ups",
       img1:"./img/StepUp1.png",
       img2:"./img/StepUp2.png",
-      img3:"./img/Stepup3.png",
+      img3:"./img/StepUp3.png",
       img4:"./img/StepUp2.png",
     },
     { name: "Seal Jacks",

@@ -95,12 +95,14 @@ function pitch() {
   hide("titleArea");
   hide("prefsArea");
   show("pitchArea");
+  document.getElementById("UISound").play();
   document.getElementById("pitch1").innerHTML="The 7 minute workout trains the major muscles of your body in a short period of time.";
   document.getElementById("pitch2").innerHTML="<img style = 'width:90%;max-width:600px;' src = './img/WorkoutGoPitch1.png'>"
   document.getElementById("pitch3").innerHTML="<button class='UIButton' onclick='continuePitch()'>Next</button>";
 }
 
 function continuePitch() {
+  document.getElementById("UISound").play();
   document.getElementById("pitch1").innerHTML="<i>7 Minute Workout Go</i> expands on <a href='http://www.thehealthjournals.com/save-time-with-the-7-minute-scientific-workout/' target='_blank'>the original routine.</a><br>" +
   "It randomizes workouts each day.";
   document.getElementById("pitch2").innerHTML="<img style = 'height:90%;max-height:200px;border-radius:20px;' src = './img/appIcon.png'>"
@@ -166,41 +168,49 @@ function save() {
 }
 
 function titleToCredits() {
+  document.getElementById("UISound").play();
   hide("titleArea");
   show("creditsArea")
 }
 
 function creditsToTitle() {
+  document.getElementById("UISound").play();
   hide("creditsArea");
   show("titleArea");
 }
 
 function titleToPrefs() {
+  document.getElementById("UISound").play();
   hide("titleArea");
   show("prefsArea");
 }
 
 function prefsToTitle() {
+  document.getElementById("UISound").play();
   hide("prefsArea");
   show("titleArea");
 }
 
 function titleToStats() {
+  document.getElementById("UISound").play();
   hide("titleArea");
   show("statsArea");
 }
 
 function statsToTitle() {
+  document.getElementById("UISound").play();
   hide("statsArea");
   show("titleArea");
 }
 
 function pitchToTitle() {
+  document.getElementById("UISound").play();
   hide("pitchArea");
   show("titleArea");
 }
 
 function introToTitle() {
+  document.getElementById("UISound").play();
   hide("initialSetUp");
   show("titleArea");
 }
@@ -210,8 +220,11 @@ function go() {
   hide("titleArea");
   show("countdown", "flex");
   document.getElementById("numberCountdown").innerHTML="3";
-  setTimeout(() => {document.getElementById("numberCountdown").innerHTML="2";},1000);
-  setTimeout(() => {document.getElementById("numberCountdown").innerHTML="1";},2000);
+  document.getElementById('countdownSound').play();
+  setTimeout(() => {document.getElementById("numberCountdown").innerHTML="2";
+document.getElementById('countdownSound').play();},1000);
+  setTimeout(() => {document.getElementById("numberCountdown").innerHTML="1";
+document.getElementById('countdownSound').play();},2000);
   setTimeout(() => {
     countdownToWorkout();startTimer();},3000);
 }
@@ -226,6 +239,7 @@ function countdownToWorkout() {
 }
 
 function hoorayToTitle() {
+  document.getElementById("UISound").play();
   hideTheBar();
   hide("hooray");
   show("titleArea");
@@ -358,6 +372,7 @@ function workoutInterval() {
 }
 
 function showWorkout() {
+  document.getElementById('gSound').play();
   if (workoutOn === workoutCategory.length) {
     showWorkoutLastMinute1();
   } else {
@@ -370,6 +385,14 @@ function showWorkout() {
       let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
       if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
       document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+
+      document.getElementById('counterClock').play();
+      if (elapsed === 20) {
+        document.getElementById('10Sec').play();
+      }
+      if (elapsed === 10) {
+        document.getElementById('20Sec').play();
+      }
     },1000);
 
     document.getElementById("footage").style.opacity = 1;
@@ -390,7 +413,7 @@ function showWorkout() {
 }
 
 function showBreak() {
-
+  document.getElementById('30Sec').play();
   let intervalTimer = timePerBreak;
   document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
   let start = Date.now();
@@ -400,6 +423,9 @@ function showBreak() {
     let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
     if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
     document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    if (elapsed > 0) {
+    document.getElementById('breakClock').play();
+    }
   },1000);
 
   workoutOn += 1;
@@ -417,6 +443,7 @@ function showBreak() {
 }
 
 function showWorkoutLastMinute1() {
+  document.getElementById('gSound').play();
   let intervalTimer = 30;
   document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
   let start = Date.now();
@@ -426,6 +453,13 @@ function showWorkoutLastMinute1() {
     let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
     if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
     document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    document.getElementById('counterClock').play();
+    if (elapsed === 20) {
+      document.getElementById('10Sec').play();
+    }
+    if (elapsed === 10) {
+      document.getElementById('20Sec').play();
+    }
   },1000);
   document.getElementById("footage").style.opacity = 1;
   document.getElementById("nameOfWorkout").innerHTML = allWorkouts[3][lastMinuteWorkout].name;
@@ -439,6 +473,7 @@ document.onkeydown = function(e) {
 }
 
 function showWorkoutLastMinute2() {
+  document.getElementById('fSound').play();
   counter = 3;
   let intervalTimer = 30;
   document.getElementById("secondsLeft").innerHTML = intervalTimer + " seconds left";
@@ -449,6 +484,13 @@ function showWorkoutLastMinute2() {
     let elapsed = (intervalTimer-Math.round(Math.floor(diff/100)/10));
     if (elapsed==intervalTimer&&elapsed%1==0){elapsed=parseInt(elapsed);};
     document.getElementById("secondsLeft").innerHTML = elapsed + " seconds left";
+    document.getElementById('counterClock').play();
+    if (elapsed === 20) {
+      document.getElementById('10Sec').play();
+    }
+    if (elapsed === 10) {
+      document.getElementById('20Sec').play();
+    }
   },1000);
   document.getElementById("nameOfWorkout").innerHTML = "Switch sides!";
   document.getElementById("footage").style.backgroundImage = `url( `+ allWorkouts[3][lastMinuteWorkout].left1 + `)`;
@@ -464,6 +506,7 @@ function finishWorkout() {
   clearInterval(b);
   hide("workoutArea");
   show("hooray");
+  document.getElementById('hoorayMusic').play();
   document.getElementById("youAreDone").innerHTML="You're done with your 7 minute workout.";
   document.getElementById("goToTitle").innerHTML="<button class='UIButton' onclick='hoorayToTitle()'>Back to Title</button>";
   document.getElementById("active-gauge").style.animationPlayState="paused";
@@ -493,6 +536,7 @@ function finishWorkout() {
 }
 
 function getName() {
+  document.getElementById("UISound").play();
   hideTheBar();
   hide("hooray");
   show("initialSetUp");
@@ -509,6 +553,7 @@ function getName() {
 }
 
 function enterName(theName) {
+  document.getElementById("UISound").play();
   hide("initialSetUp");
   setTimeout ( () => {show("initialSetUp")}, 1);
   if (theName === "") {
@@ -533,6 +578,7 @@ function enterName(theName) {
 }
 
 function nextIntroSlide() {
+  document.getElementById("UISound").play();
   hide("initialSetUp");
   setTimeout ( () => {show("initialSetUp")}, 1);
   document.getElementById("initialSetUp").innerHTML=`

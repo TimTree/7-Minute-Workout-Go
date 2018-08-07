@@ -412,6 +412,28 @@ transform:scale(1.05);
 transform:scale(0.95);
 }
 
+.DeleteButton {
+  background-color:rgba(253, 142, 142, 0.6);
+  border-radius:4px;
+  font-family:"noto sans",sans-serif;
+  font-size:14px;
+  padding:3px 14px;
+  margin:10px 0 0 0;
+  cursor:pointer;
+  text-decoration:none;
+  outline:none;
+  transition: 0.15s;
+  border:0;
+}
+
+.DeleteButton:hover {
+background-color:rgba(253, 142, 142, 0.85);
+transform:scale(1.05);
+}
+
+.DeleteButton:active {
+transform:scale(0.95);
+}
 
 #yourName {
   font-size:26px;

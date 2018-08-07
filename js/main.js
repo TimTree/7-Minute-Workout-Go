@@ -123,12 +123,17 @@ document.getElementById("go").addEventListener("click", function(){
   go();
 });
 
+document.getElementById("yourName").addEventListener('click', function (evt) {
+  document.getElementById('prefSound').play();
+});
+
 document.getElementById("yourName").addEventListener('input', function (evt) {
     saveData.name = document.getElementById("yourName").value;
     save();
 });
 
 document.getElementById("orangeBackground").addEventListener("click", function(){
+  document.getElementById('prefSound').play();
   saveData.bgColor = `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`;
   save();
   document.body.style.background = saveData.bgColor;
@@ -138,6 +143,7 @@ highlightBgColor();
 });
 
 document.getElementById("greenBackground").addEventListener("click", function(){
+  document.getElementById('prefSound').play();
   saveData.bgColor = `linear-gradient(-45deg,  #0f95ad, #0cad6a,  #9bba10, #ccb504)`;
   save();
   document.body.style.background = saveData.bgColor;
@@ -146,6 +152,7 @@ document.getElementById("greenBackground").addEventListener("click", function(){
 });
 
 document.getElementById("blueBackground").addEventListener("click", function(){
+  document.getElementById('prefSound').play();
   saveData.bgColor = `linear-gradient(-45deg,  #7354ff, #11389e,  #275cad, #279ac4)`;
   save();
   document.body.style.background = saveData.bgColor;
@@ -154,6 +161,7 @@ document.getElementById("blueBackground").addEventListener("click", function(){
 });
 
 document.getElementById("purpleBackground").addEventListener("click", function(){
+  document.getElementById('prefSound').play();
   saveData.bgColor = `linear-gradient(-45deg,  #a55871, #9b699a,  #846196, #625277)`;
   save();
   document.body.style.background = saveData.bgColor;
@@ -545,7 +553,7 @@ function getName() {
   <p>By the way, <b>what's your name?</b> I'd like to call you that from here on out.</p>
   <p style="display:flex;align-items:center;justify-content:center;">
   <form name="yourNamer" onsubmit="return enterName(document.yourNamer.yourName1.value)">
-  <input id="yourName1" maxlength="12"></input> &nbsp;&nbsp;&nbsp; <button type="submit" class="UIButton">Enter</button>
+  <input id="yourName1" maxlength="12" onclick="document.getElementById('prefSound').play()"></input> &nbsp;&nbsp;&nbsp; <button type="submit" class="UIButton">Enter</button>
   </form>
   </p>
   <p><button class="PrefsButton" onclick="enterName('')">Skip Name</button></p>
@@ -737,4 +745,12 @@ function hideTheBar() {
   document.getElementById("body").style.gridTemplateAreas = `"content"`;
   document.getElementById("theBar").style.display = "none";
   document.getElementById("theBar").style.opacity = "0";
+}
+
+function deleteProfile() {
+  document.getElementById("deleteSound").play();
+  var b = window.confirm("Whoa there! Are you ABSOLUTELY sure you want to destroy all your progress?");
+  if (b == true) {
+    localStorage.removeItem("7MinuteWorkoutGoSaveData");location.reload();
+  }
 }

@@ -96,6 +96,7 @@
         <div class="backgroundSelection" id="purpleBackground"></div>
       </div>
         <p><button class="PrefsButton" onclick="pitch()">View Initial Help</button></p>
+        <p style="margin-top:-0.5em;"><button class="DeleteButton" onclick="deleteProfile()">Delete Profile</button></p>
         <p><button class="UIButton" onclick="prefsToTitle()">Go Back</button></p>
       </div>
 
@@ -158,6 +159,12 @@
     </audio>
     <audio id="UISound">
       <source src="./audio/UISound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="prefSound">
+      <source src="./audio/PrefSound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="deleteSound">
+      <source src="./audio/DeleteSound.mp3" type="audio/mp3">
     </audio>
 
     <script src="js/workouts.js" charset="utf-8"></script>

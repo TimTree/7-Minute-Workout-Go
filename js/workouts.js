@@ -47,6 +47,12 @@ const allWorkouts = [
       img3:"./img/SealJack1.png",
       img4:"./img/SealJack2.png",
     },
+    { name: "Side Shuffle",
+      img1:"./img/SideShuffle1.png",
+      img2:"./img/SideShuffle2.png",
+      img3:"./img/SideShuffle3.png",
+      img4:"./img/SideShuffle2.png",
+    },
   ],
   /* Upper/Lower Body */ [
     { name: "Wall Sit",

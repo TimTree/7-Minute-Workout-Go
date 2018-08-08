@@ -267,7 +267,7 @@ function playYouTube() {
     if (youTubeID != undefined) {
       document.getElementById("youTubePlayer").src = "https://www.youtube.com/embed/" + youTubeID + "?rel=0&controls=0&showinfo=0&autoplay=1&loop=1&playlist= " + youTubeID;
     } else {
-      document.getElementById("youTube").innerHTML="Invalid YouTube URL";
+      document.getElementById("youTubeMsg").innerHTML="Invalid YouTube URL";
     }
   }
 }
@@ -295,6 +295,7 @@ function countdownToWorkout() {
 function hoorayToTitle() {
   document.getElementById("UISound").play();
   document.getElementById("youTubePlayer").src="";
+  document.getElementById("youTubeMsg").innerHTML="";
   hideTheBar();
   hide("hooray");
   hide("youTube");

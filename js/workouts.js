@@ -203,5 +203,11 @@ const allWorkouts = [
       left1:"./img/SingleLegDeadLiftLeft.png",
       left2:"./img/SingleLegDeadLiftLeft.png",
     },
+    { name: "Donkey Kick",
+      right1:"./img/DonkeyKick.png",
+      right2:"./img/DonkeyKickRight.png",
+      left1:"./img/DonkeyKick.png",
+      left2:"./img/DonkeyKickLeft.png",
+    },
   ],
 ];

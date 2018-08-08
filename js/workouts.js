@@ -2,7 +2,9 @@ let saveData = {
   name: "",
   completedWorkoutDates: [],
   streakHistory: [0],
-  bgColor: `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`
+  bgColor: `linear-gradient(-45deg,  #72a504, #cc8a08,  #d68f02, #c44b09)`,
+  youTubeEnabled: true,
+  youTubeURL: ""
 }
 
 const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",

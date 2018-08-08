@@ -37,7 +37,9 @@
         </div>
       </div>
 
-
+      <div id="youTube">
+          <iframe id="youTubePlayer" frameborder="0" allow="autoplay"></iframe>​
+      </div>
 
       <div id="titleArea">
         <p class="intro" id="intro-greeting"></p>
@@ -96,9 +98,21 @@
         <div class="backgroundSelection" id="blueBackground"></div>
         <div class="backgroundSelection" id="purpleBackground"></div>
       </div>
-        <p><button class="PrefsButton" onclick="pitch()">View Initial Help</button></p>
-        <p style="margin-top:-0.5em;"><button class="DeleteButton" onclick="deleteProfile()">Delete Profile</button></p>
+        <p>
+          <button class="PrefsButton" onclick="prefsToYouTube()">YouTube Player</button>
+        </p>
+        <p style="margin-top:-0.5em;">
+          <button class="PrefsButton" style="font-size:14px;border-radius:4px;" onclick="pitch()">View Pitch</button> &nbsp; <button class="DeleteButton" onclick="deleteProfile()">Delete Profile</button></p>
         <p><button class="UIButton" onclick="prefsToTitle()">Go Back</button></p>
+      </div>
+
+      <div id="youTubeArea">
+        <h3>YouTube Player (Experimental)</h3>
+
+        <!--<p>YouTube Player: &nbsp; On Off</p>-->
+        <p>Insert a YouTube video URL here.<br><em>7 Minute Workout Go</em> will play the video during your workout.</p>
+        <p><input id="youTubeURLInput"></input></p>
+        <p><button class="UIButton" onclick="youTubeToPrefs()">Go Back</button></p>
       </div>
 
       <div id="creditsArea">

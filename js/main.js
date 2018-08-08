@@ -31,6 +31,7 @@ var isNotSafariPrivate = function() {
 
 document.body.style.background = saveData.bgColor;
 document.body.style.backgroundSize = `400% 400%`;
+document.getElementById("youTubePlayer").src = "";
 
 setTimeout(() => {
   show("titleArea");
@@ -127,8 +128,17 @@ document.getElementById("yourName").addEventListener('click', function (evt) {
   document.getElementById('prefSound').play();
 });
 
+document.getElementById("youTubeURLInput").addEventListener('click', function (evt) {
+  document.getElementById('prefSound').play();
+});
+
 document.getElementById("yourName").addEventListener('input', function (evt) {
     saveData.name = document.getElementById("yourName").value;
+    save();
+});
+
+document.getElementById("youTubeURLInput").addEventListener('input', function (evt) {
+    saveData.youTubeURL = document.getElementById("youTubeURLInput").value;
     save();
 });
 
@@ -217,6 +227,18 @@ function pitchToTitle() {
   show("titleArea");
 }
 
+function prefsToYouTube() {
+  document.getElementById("UISound").play();
+  hide("prefsArea");
+  show("youTubeArea");
+}
+
+function youTubeToPrefs() {
+  document.getElementById("UISound").play();
+  hide("youTubeArea");
+  show("prefsArea");
+}
+
 function introToTitle() {
   document.getElementById("UISound").play();
   hide("initialSetUp");
@@ -227,6 +249,7 @@ function go() {
   createWorkout();
   hide("titleArea");
   show("countdown", "flex");
+  show("youTube", "flex");
   document.getElementById("numberCountdown").innerHTML="3";
   document.getElementById('countdownSound').play();
   setTimeout(() => {document.getElementById("numberCountdown").innerHTML="2";
@@ -234,7 +257,30 @@ document.getElementById('countdownSound').play();},1000);
   setTimeout(() => {document.getElementById("numberCountdown").innerHTML="1";
 document.getElementById('countdownSound').play();},2000);
   setTimeout(() => {
-    countdownToWorkout();startTimer();},3000);
+    countdownToWorkout();startTimer();playYouTube();},3000);
+}
+
+function playYouTube() {
+  if (saveData.youTubeURL != "") {
+    let youTubeID = getYouTubeID(saveData.youTubeURL);
+    console.log(youTubeID);
+    if (youTubeID != undefined) {
+      document.getElementById("youTubePlayer").src = "https://www.youtube.com/embed/" + youTubeID + "?rel=0&controls=0&showinfo=0&autoplay=1&loop=1&playlist= " + youTubeID;
+    } else {
+      document.getElementById("youTube").innerHTML="Invalid YouTube URL";
+    }
+  }
+}
+
+function getYouTubeID(url) {
+  // https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
+      var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      var match = url.match(regExp);
+      if (match && match[2].length == 11) {
+        return match[2];
+      } else {
+        //error
+      }
 }
 
 function countdownToWorkout() {
@@ -248,8 +294,10 @@ function countdownToWorkout() {
 
 function hoorayToTitle() {
   document.getElementById("UISound").play();
+  document.getElementById("youTubePlayer").src="";
   hideTheBar();
   hide("hooray");
+  hide("youTube");
   show("titleArea");
 }
 
@@ -695,6 +743,10 @@ function show(elementName, display) {
   }
   else if (elementName === "prefsArea") {
       document.getElementById("yourName").value = saveData.name;
+      highlightBgColor();
+  }
+  else if (elementName === "youTubeArea") {
+      document.getElementById("youTubeURLInput").value = saveData.youTubeURL;
       highlightBgColor();
   }
   else if (elementName === "statsArea") {

@@ -599,6 +599,11 @@ h3 {
   display:none;
 }
 
+#youTubePlayer {
+  width:288px;
+  height:162px;
+}
+
 #youTubeURLInput {
   font-size:22px;
   width:8em;

@@ -55,13 +55,25 @@ function renderTitleText() {
     }
   }
   else if (hour >=18 && hour <=19) {
+    if (saveData.name === "") {
     document.getElementById("intro-greeting").innerHTML = "Good evening!";
+    } else {
+    document.getElementById("intro-greeting").innerHTML = "Good evening, <b>" + saveData.name + "</b>!";
+    }
   }
   else if (hour >=20 && hour <=23) {
-    document.getElementById("intro-greeting").innerHTML = "Nice to see you this late at night!";
+    if (saveData.name === "") {
+    document.getElementById("intro-greeting").innerHTML = "Nice to see you here at night!";
+    } else {
+    document.getElementById("intro-greeting").innerHTML = "Nice to see you here at night, <b>" + saveData.name + "</b>!";
+    }
   }
   else {
-    document.getElementById("intro-greeting").innerHTML = "Hey there... *yawn*";
+    if (saveData.name === "") {
+    document.getElementById("intro-greeting").innerHTML = "Hey there...*yawn*";
+    } else {
+    document.getElementById("intro-greeting").innerHTML = "Hey <b>" + saveData.name + "</b>...*yawn*";
+    }
   }
 
   if (didWorkoutToday() === false) {

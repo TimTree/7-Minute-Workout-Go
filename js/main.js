@@ -277,7 +277,7 @@ function playYouTube() {
     let youTubeID = getYouTubeID(saveData.youTubeURL);
     console.log(youTubeID);
     if (youTubeID != undefined) {
-      document.getElementById("youTubePlayer").src = "https://www.youtube.com/embed/" + youTubeID + "?rel=0&controls=0&showinfo=0&autoplay=1&loop=1&playlist= " + youTubeID;
+      document.getElementById("youTubePlayer").src = "https://www.youtube-nocookie.com/embed/" + youTubeID + "?rel=0&controls=0&showinfo=0&autoplay=1&loop=1&playlist= " + youTubeID;
     } else {
       document.getElementById("youTubeMsg").innerHTML="Invalid YouTube URL";
     }

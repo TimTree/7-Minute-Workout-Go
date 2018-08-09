@@ -299,7 +299,7 @@ background-position: center;
   border-radius:20px;
   padding:0 20px;
   opacity:0;
-  font-size:24px;
+  font-size:22px;
   transition: opacity 0.25s ease-in-out;
 }
 
@@ -600,7 +600,7 @@ h3 {
 }
 
 #youTubeURLInput {
-  font-size:26px;
+  font-size:22px;
   width:8em;
   text-align:center;
   border-radius:5px;

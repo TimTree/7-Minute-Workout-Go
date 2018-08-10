@@ -388,6 +388,7 @@ h2 {
   outline:none;
   transition: 0.15s;
   border:0;
+  color:#000;
 }
 
 .UIButton:hover {

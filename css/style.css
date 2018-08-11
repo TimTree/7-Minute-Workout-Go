@@ -412,6 +412,7 @@ transform:scale(0.95);
   outline:none;
   transition: 0.15s;
   border:0;
+  color:#000;
 }
 
 .PrefsButton:hover {
@@ -435,6 +436,7 @@ transform:scale(0.95);
   outline:none;
   transition: 0.15s;
   border:0;
+  color:#000;
 }
 
 .DeleteButton:hover {
